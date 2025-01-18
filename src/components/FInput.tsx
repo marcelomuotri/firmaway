@@ -63,7 +63,9 @@ interface InputWithTitleProps {
 
 const InputWithTitle: React.FC<InputWithTitleProps> = ({ label, children }) => {
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+    <Box
+      sx={{ display: 'flex', flexDirection: 'column', gap: 5, width: '100%' }}
+    >
       <Typography
         sx={{
           color: theme.palette.common.black,
@@ -87,7 +89,6 @@ const FInput: React.FC<GenericInputProps> = ({
   type,
   placeholder,
   options = [],
-  defaultValue,
   helperText = '',
   width = '100%', // Valor predeterminado de 230px
   rows = 1,
@@ -279,29 +280,6 @@ const FInput: React.FC<GenericInputProps> = ({
             )}
           </FormControl>
         )
-      //   case 'date':
-      //     return (
-      //       <InputWithTitle label={label}>
-      //         <LocalizationProvider dateAdapter={AdapterDayjs}>
-      //           <DatePicker
-      //             {...field}
-      //             onChange={(date) => field.onChange(date)}
-      //             format={'DD/MM/YYYY'}
-      //             value={field.value || null}
-      //             slotProps={{
-      //               textField: {
-      //                 variant: 'outlined',
-      //                 error: !!error,
-      //                 helperText: error ? error.message : helperText,
-      //                 fullWidth: true,
-      //                 size: 'small',
-      //               },
-      //             }}
-      //             disabled={disabled}
-      //           />
-      //         </LocalizationProvider>
-      //       </InputWithTitle>
-      //     )
       case 'autocomplete':
         return (
           <InputWithTitle label={label}>

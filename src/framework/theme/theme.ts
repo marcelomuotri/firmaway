@@ -12,15 +12,16 @@ export const theme = {
       light: '#D8E8EB',
     },
     text: {
-      primary: '#757575',
+      primary: '#231F20',
       secondary: '#074A56',
       input: '#495057',
     },
     action: {
       active: '#F7F7F7',
       hover: '#F7F7F7',
-      disabled: '#CED4DA',
-      disabledBorder: '#DEE2E6',
+      disabled: '#FFF6F4',
+      disabledBackground: '#C0A7A1',
+      focus: '#024675',
     },
     background: {
       paper: '#F8F9FA',
@@ -47,7 +48,7 @@ export const theme = {
       grey: '#7D7D7D',
       green: '#009B57',
       orange: '#F05050',
-      blue: '#BA650A',
+      blue: '#D2E0E9',
       icons: '#868E96',
     },
     divider: '#DEE2E6',

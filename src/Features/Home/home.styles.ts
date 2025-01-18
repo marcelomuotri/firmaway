@@ -20,7 +20,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     fontSize: 24,
     lineHeight: '32px',
     textAlign: 'center',
-    color: '#231F20',
+    color: theme.palette.text.primary,
     marginBottom: 8,
   },
   text: {

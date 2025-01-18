@@ -58,6 +58,7 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
     styleOverrides: {
       root: {
         fontSize: '14px', // Establece el tamaño de fuente aquí
+        //letterSpacing: '0.45px',
       },
     },
   },
@@ -97,24 +98,28 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
       },
     },
   },
-  // MuiListItemButton: {
-  //   styleOverrides: {
-  //     root: {
-  //         borderRadius: 4,
-  //         '&.Mui-selected': {
-  //           backgroundColor: '#F7F7F7',
-  //           '&:hover': {
-  //             backgroundColor: '#F7F7F7',
-  //           },
-  //         },
-  //     },
-  //   },
-  // },
   MuiOutlinedInput: {
     styleOverrides: {
       root: {
-        borderRadius: 8,
-        height: 40,
+        borderRadius: 13,
+        height: 50,
+        //padding: '16px 32px',
+        '& .MuiOutlinedInput-notchedOutline': {
+          borderColor: '#DFE5E9',
+          transition: 'border-color 0.3s ease-in-out',
+          borderWidth: 1,
+        },
+        '&:hover .MuiOutlinedInput-notchedOutline': {
+          borderColor: '#DFE5E9', // Color al pasar el mouse
+        },
+        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+          borderColor: theme.palette.action.focus, // Color cuando está enfocado
+          borderWidth: 1,
+        },
+      },
+      input: {
+        padding: '14px 30px',
+        fontSize: 14,
       },
     },
   },

@@ -1,15 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit'
 //import { authReducer } from './slices/authSlice'
 // @ts-ignore
-import { api } from './api'
+import { hubspotService } from './services/hubspotApi'
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
-    //auth: authReducer,
-    api: api.reducer,
+    [hubspotService.reducerPath]: hubspotService.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(api.middleware),
+    getDefaultMiddleware().concat(hubspotService.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -1,5 +1,5 @@
 export const typographys = {
-  fontFamily: 'Inter, -apple-system, system-ui',
+  fontFamily: 'Inter',
   htmlFontSize: 16,
   fontWeightRegular: 400,
   fontWeightMedium: 600,

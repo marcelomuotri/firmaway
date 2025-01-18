@@ -1,0 +1,17 @@
+{
+  "start": "1. Empezar",
+  "connect": "2. Conectar",
+  "clasify": "3. Clasificar",
+  "revise": "4. Revisar",
+  "step1_enterEin": "Ingresa el EIN de tu empresa",
+  "step1_subtitle": "El número de identificación del empleador se usa para identificar a una entidad comercial",
+  "step1_searchCompany": "Buscar empresa",
+  "step1_noUser": "¿No eres usuario de Firmaway?",
+  "step1_register": "Registrarme",
+  "step1_noResultsTitle": "No encontramos resultados 😮‍💨",
+  "step1_noResultsSubtitle": "Asegúrate de escribir correctamente el EIN de tu empresa y vuelve a buscar.",
+  "step1_noResultsButton": "Volver a buscar",
+  "step1_resultTitle": "Esto es lo que encontramos ✅",
+  "ste1_resultSubtitle": "Haz clic en continuar para avanzar.",
+  "step1_resultsButton": "Volver a buscar"
+}

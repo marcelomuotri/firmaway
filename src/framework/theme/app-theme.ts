@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material/styles'
 import { theme } from './theme'
 import { appTypographys } from './app-typography'
 import { appComponents } from './app-components'
+import '@fontsource/inter'
 
 const appTheme = createTheme({
   palette: {
