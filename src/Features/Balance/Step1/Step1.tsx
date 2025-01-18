@@ -8,19 +8,20 @@ import SearchIcon from '../../../assets/SearchIcon'
 import { useGetHubspotDataQuery } from '../../../framework/state/services/hubspotApi'
 import { useEffect, useState } from 'react'
 
+export interface HubSpotUser {
+  hubspot_id?: string
+  supabase_id?: string
+  company_name?: string
+  ein?: string
+  message?: string
+}
+
 const Step1 = () => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
   const [ein, setEin] = useState<string | null>(null)
   const [status, setStatus] = useState(1) //0//1ok/2noexiste
-  const [companyData, setCompanyData] = useState<{
-    hubspot_id?: string
-    supabase_id?: string
-    company_name?: string
-    ein?: string
-    message?: string
-  } | null>(null)
-  const { data, error, isFetching, refetch } = useGetHubspotDataQuery(
+  const { data, isFetching } = useGetHubspotDataQuery(
     { ein: ein || '' },
     { skip: !ein }
   )
@@ -49,7 +50,7 @@ const Step1 = () => {
     }
   }, [data])
 
-  const onSearchCompany = (data) => {
+  const onSearchCompany = (data: any) => {
     setEin(data.ein)
   }
 

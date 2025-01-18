@@ -2,12 +2,14 @@ import { useStyles } from './home.styles'
 import { Box, Typography } from '@mui/material'
 import logo from '../../assets/logoBalancito.png'
 import FButton from '../../components/FButton/FButton'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const { classes: styles } = useStyles()
+  const navigate = useNavigate()
 
   const onClickStart = () => {
-    console.log('holis')
+    navigate('/balance')
   }
 
   return (
