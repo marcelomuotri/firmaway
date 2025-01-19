@@ -17,8 +17,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
       borderWidth: 1,
     },
     '&.MuiButton-sizeSmall': {
-      paddingLeft: 32,
-      paddingRight: 32,
+      padding: '8px 24px',
     },
     '&.MuiButton-sizeMedium': {
       paddingLeft: 48,
@@ -28,5 +27,9 @@ export const useStyles = makeStyles()((theme: Theme) => ({
   title: {
     fontWeight: 600,
     lineHeight: '14px',
+    color: 'white',
+  },
+  disabled: {
+    color: '#C0A7A1',
   },
 }))

@@ -13,7 +13,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
   },
   cancelButton: {
     fontSize: '12px',
-    padding: '8px 24px',
+    padding: '8px 16px',
     color: '#6F757B',
     lineHeight: '12px',
     fontWeight: 600,
@@ -48,11 +48,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
   },
   continueButton: {
     fontSize: '12px',
-    padding: '8px 24px',
-    color: 'white',
-    background: theme.palette.primary.main,
     lineHeight: '18px',
-    borderRadius: '13px',
     fontWeight: 600,
 
     '&:disabled': {

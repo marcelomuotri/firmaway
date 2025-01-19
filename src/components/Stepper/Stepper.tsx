@@ -9,6 +9,7 @@ interface StepperProps {
   isStep1Ready: boolean
   step1Status: number
   onNextStep: () => void
+  isRegisterLoading: boolean
 }
 
 const Stepper = ({
@@ -17,6 +18,7 @@ const Stepper = ({
   isStep1Ready,
   step1Status,
   onNextStep,
+  isRegisterLoading,
 }: StepperProps) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
@@ -53,9 +55,12 @@ const Stepper = ({
       </Box>
       <FButton
         disabled={!isStep1Ready}
-        className={styles.continueButton}
+        //className={styles.continueButton}
         onClick={onNextStep}
         title={step1Status === 4 ? t('register') : t('continue')}
+        loading={isRegisterLoading}
+        size={'small'}
+        textClassName={styles.continueButton}
       />
     </Box>
   )

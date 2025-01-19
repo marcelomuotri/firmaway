@@ -74,6 +74,10 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
           boxShadow: 'none',
         },
         borderRadius: theme.shape.borderRadius,
+        '&.Mui-disabled': {
+          backgroundColor: '#FFF6F4',
+          color: '#C0A7A1',
+        },
       },
     },
   },

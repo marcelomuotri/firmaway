@@ -18,22 +18,30 @@ type SharedBtnProps = {
     | 'info'
     | 'warning'
   size?: 'small' | 'medium' | 'large'
-  className?: string
+  className?: string // ✅ Permitir pasar className externa
+  sx?: object // ✅ Permitir estilos de MUI desde fuera
   disabled?: boolean
   fullWidth?: boolean
   href?: string
   textTransform?: 'inherit' | 'initial' | 'none' | 'lowercase' | 'uppercase'
   padding?: string
   loading?: boolean // Nueva prop para mostrar el loader
+  textClassName?: string
 }
 
-const FButton = (props: SharedBtnProps) => {
-  const { classes: styles, cx } = useStyles()
+const FButton = ({
+  className, // ✅ Recibir className externa
+  sx, // ✅ Permitir sx para estilos personalizados
+  ...props
+}: SharedBtnProps) => {
+  const { classes: styles } = useStyles()
+
   return (
     <Button
       href={props.href}
-      disabled={props.disabled || props.loading} // Botón deshabilitado cuando loading es true
-      className={cx(props.className, styles.button)}
+      disabled={props.disabled || props.loading}
+      className={`${styles.button} ${className || ''}`} // ✅ Aplica la className externa
+      sx={{ ...sx }} // ✅ Permite usar sx para estilos inline
       variant={props.variant || 'contained'}
       color={props.color || 'primary'}
       size={props.size || 'medium'}
@@ -46,13 +54,10 @@ const FButton = (props: SharedBtnProps) => {
       endIcon={!props.loading && props.endIcon}
     >
       {props.loading ? (
-        <Box style={{ display: 'flex', gap: 8 }}>
+        <Box sx={{ display: 'flex', gap: 1 }}>
           <Typography
-            color={
-              props.variant !== 'outlined' ? 'common.white' : 'primary.main'
-            }
             variant={'bodyRegular'}
-            className={styles.title}
+            className={`${styles.title} ${props.disabled ? styles.disabled : ''} ${props.textClassName || ''}`}
           >
             {props.title}
           </Typography>
@@ -60,9 +65,8 @@ const FButton = (props: SharedBtnProps) => {
         </Box>
       ) : props.title ? (
         <Typography
-          color={props.variant !== 'outlined' ? 'common.white' : 'primary.main'}
           variant={'bodyRegular'}
-          className={styles.title}
+          className={`${styles.title} ${props.disabled ? styles.disabled : ''} ${props.textClassName || ''}`}
         >
           {props.title}
         </Typography>

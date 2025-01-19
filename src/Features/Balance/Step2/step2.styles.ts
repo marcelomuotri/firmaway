@@ -28,4 +28,18 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     lineHeight: '20px',
     marginBottom: 16,
   },
+  tutorialContainer: {
+    display: 'flex',
+    gap: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  tutorial: {},
+  tutorialLink: {
+    lineHeight: '16px',
+    color: theme.palette.primary.main,
+    fontWeight: 600,
+    cursor: 'pointer',
+  },
 }))

@@ -26,8 +26,12 @@ const Balance = () => {
   const [step1Status, setStep1Status] = useState(1)
   const [isStep1Ready, setIsStep1Ready] = useState(false)
   const [ein, setEin] = useState<string | null>(null)
+  const [isButtonTokenDisabled, setIsButtonTokenDisabled] = useState(true)
   const { data: hubSpotData, isFetching: isFetchingHubspot } =
-    useGetHubspotDataQuery({ ein: ein || '' }, { skip: !ein })
+    useGetHubspotDataQuery(
+      { ein: ein?.replace(/-/g, '') || '' }, // ✅ Remueve el guion antes de enviar
+      { skip: !ein }
+    )
 
   const [registerCompany, { isLoading: isRegisterLoading }] =
     useRegisterCompanyMutation()
@@ -49,8 +53,22 @@ const Balance = () => {
     },
   })
 
-  const registerValues = watch()
+  const {
+    handleSubmit: handleTokenSubmit,
+    control: tokenControl,
+    formState: { errors: tokenErrors },
+    watch: watchToken,
+  } = useForm({
+    mode: 'onBlur',
+    defaultValues: {
+      token: '',
+    },
+  })
 
+  const registerValues = watch()
+  const tokenValues = watchToken()
+
+  //////step1 check
   useEffect(() => {
     if (step1Status === 2) {
       // Paso 2: EIN encontrado → habilitamos directamente
@@ -68,17 +86,27 @@ const Balance = () => {
     }
   }, [step1Status, registerValues, registerErrors, setIsStep1Ready])
 
-  const onNextStep = () => {
+  ////step2check
+  useEffect(() => {
+    if (tokenValues.token) {
+      setIsButtonTokenDisabled(false)
+    }
+  }, [tokenValues])
+
+  const onNextStep = async () => {
     if (step1Status === 4) {
       const { llcName, ein, name, surname, email, phone } = registerValues
-      registerCompany({
+      const response = await registerCompany({
         first_name: name,
         last_name: surname,
         email: email,
         phone: phone,
-        ein: ein,
+        ein: ein?.replace(/-/g, ''),
         company_name: llcName,
       })
+      if (response.data.company_name) {
+        setActiveStep(activeStep + 1)
+      }
     } else {
       setActiveStep(activeStep + 1)
     }
@@ -95,6 +123,7 @@ const Balance = () => {
         isStep1Ready={isStep1Ready}
         step1Status={step1Status}
         onNextStep={onNextStep}
+        isRegisterLoading={isRegisterLoading}
       />
       {activeStep === 0 && (
         <Step1
@@ -110,14 +139,8 @@ const Balance = () => {
       )}
       {activeStep === 1 && (
         <Step2
-          step1Status={step1Status}
-          setStep1Status={setStep1Status}
-          setIsStep1Ready={setIsStep1Ready}
-          hubSpotData={hubSpotData}
-          isFetchingHubspot={isFetchingHubspot}
-          setEin={setEin}
-          registerControl={registerControl}
-          registerErrors={registerErrors}
+          tokenControl={tokenControl}
+          isButtonTokenDisabled={isButtonTokenDisabled}
         />
       )}
     </Box>

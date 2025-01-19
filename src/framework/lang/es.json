@@ -26,5 +26,8 @@
   "continue": "Continuar",
   "register": "Registrarme",
   "step2_title": "Conexión segura con Mercury 🔒",
-  "step2_subtitle": "Genera una API Key de solo lectura para conectar tu cuenta Mercury de forma cifrada y segura."
+  "step2_subtitle": "Genera una API Key de solo lectura para conectar tu cuenta Mercury de forma cifrada y segura.",
+  "step2_dontKnowHow": "¿No sabes cómo hacerlo?",
+  "step2_learn": "Aprende aquí.",
+  "connect_now": "Conectar ahora"
 }

@@ -78,7 +78,7 @@ const Step1 = ({
                 {t('step1_subtitle')}
               </Typography>
               <Box className={styles.inputContainer}>
-                <FInput type='text' control={control} name='ein' />
+                <FInput type='ein' control={control} name='ein' />
               </Box>
               <Box className={styles.buttonContainer}>
                 <FButton
@@ -154,7 +154,7 @@ const Step1 = ({
                 {t('step1_noResultsSubtitle')}
               </Typography>
               <Box className={styles.inputContainer}>
-                <FInput type='text' control={control} name='ein' />
+                <FInput type='ein' control={control} name='ein' />
               </Box>
               <Box className={styles.buttonContainer}>
                 <FButton
@@ -199,7 +199,7 @@ const Step1 = ({
                   label={t('llcName')}
                 />
                 <FInput
-                  type='text'
+                  type='ein'
                   control={registerControl}
                   name='ein'
                   label={t('EIN')}
