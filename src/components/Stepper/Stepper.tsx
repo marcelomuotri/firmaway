@@ -1,12 +1,23 @@
 import { Box, Button, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useStyles } from './stepper.styles'
+import FButton from '../FButton/FButton'
 
 interface StepperProps {
   activeStep: number
+  setActiveStep: (activeStep: number) => void
+  isStep1Ready: boolean
+  step1Status: number
+  onNextStep: () => void
 }
 
-const Stepper = ({ activeStep }: StepperProps) => {
+const Stepper = ({
+  activeStep,
+  setActiveStep,
+  isStep1Ready,
+  step1Status,
+  onNextStep,
+}: StepperProps) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
 
@@ -22,23 +33,30 @@ const Stepper = ({ activeStep }: StepperProps) => {
       <Button className={styles.cancelButton}>Cancelar</Button>
       <Box className={styles.stepper}>
         {steps.map((step, index) => {
-          const isActive = index === activeStep
+          const isCompleted = index < activeStep
+          const isCurrent = index === activeStep
+          const isActiveOrCompleted = isCompleted || isCurrent
           return (
             <Box
               key={step.label}
-              className={`${styles.step} ${isActive ? styles.active : ''}`}
+              className={`${styles.step} ${isActiveOrCompleted ? styles.active : ''}`}
             >
               <Box
-                className={`${styles.stepConnector} ${isActive ? styles.activeConnector : ''}`}
-              ></Box>
+                className={`${styles.stepConnector} ${
+                  isActiveOrCompleted ? styles.activeConnector : ''
+                }`}
+              />
               <Typography className={styles.stepText}>{step.label}</Typography>
             </Box>
           )
         })}
       </Box>
-      <Button disabled className={styles.continueButton}>
-        Continuar
-      </Button>
+      <FButton
+        disabled={!isStep1Ready}
+        className={styles.continueButton}
+        onClick={onNextStep}
+        title={step1Status === 4 ? t('register') : t('continue')}
+      />
     </Box>
   )
 }

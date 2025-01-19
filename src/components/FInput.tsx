@@ -64,7 +64,7 @@ interface InputWithTitleProps {
 const InputWithTitle: React.FC<InputWithTitleProps> = ({ label, children }) => {
   return (
     <Box
-      sx={{ display: 'flex', flexDirection: 'column', gap: 5, width: '100%' }}
+      sx={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}
     >
       <Typography
         sx={{
@@ -302,7 +302,6 @@ const FInput: React.FC<GenericInputProps> = ({
               onChange={(_, data) => field.onChange(data)}
               onInputChange={(event, newInputValue) => {
                 if (!options.includes(newInputValue)) {
-                  console.log(newInputValue)
                   field.onChange(newInputValue)
                 }
               }}

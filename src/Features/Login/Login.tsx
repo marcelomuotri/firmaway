@@ -22,9 +22,7 @@ const Login = () => {
   //   }
   //   fetch()
   // }, [])
-  const onLogin = () => {
-    console.log('holis')
-  }
+  const onLogin = () => {}
 
   return (
     <Box className={styles.loginContainer}>

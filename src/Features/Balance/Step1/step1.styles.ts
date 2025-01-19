@@ -39,6 +39,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
   footerContainer: {
     display: 'flex',
     gap: 4,
+    justifyContent: 'center',
   },
   company: {
     fontSize: 16,
@@ -61,5 +62,12 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     lineHeight: '16px',
     color: theme.palette.primary.main,
     fontWeight: 600,
+    cursor: 'pointer',
+  },
+  step4InputContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 16,
+    marginBottom: 32,
   },
 }))

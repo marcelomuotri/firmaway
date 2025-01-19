@@ -13,5 +13,18 @@
   "step1_noResultsButton": "Volver a buscar",
   "step1_resultTitle": "Esto es lo que encontramos ✅",
   "ste1_resultSubtitle": "Haz clic en continuar para avanzar.",
-  "step1_resultsButton": "Volver a buscar"
+  "step1_resultsButton": "Volver a buscar",
+  "step1_registerCompany": "Registrar mi empresa",
+  "step1_completeData": "Completa los siguientes datos para que podamos iniciar con el proceso.",
+  "llcName": "Nombre de la LLC",
+  "names": "Nombres",
+  "surnames": "Apellidos",
+  "email": "Email",
+  "phone": "Teléfono",
+  "year": "Año ",
+  "step1_areYouUser": "¿Eres usuario de Firmaway?",
+  "continue": "Continuar",
+  "register": "Registrarme",
+  "step2_title": "Conexión segura con Mercury 🔒",
+  "step2_subtitle": "Genera una API Key de solo lectura para conectar tu cuenta Mercury de forma cifrada y segura."
 }
