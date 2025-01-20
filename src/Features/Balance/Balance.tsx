@@ -10,6 +10,8 @@ import {
 } from '../../framework/state/services/hubspotApi'
 import { useForm } from 'react-hook-form'
 import Step2 from './Step2/Step2'
+import { usePostTransactionsMutation } from '../../framework/state/services/transactionsApi'
+import { useBalanceForm } from './hooks/useBalanceForm'
 
 export interface HubSpotUser {
   hubspot_id?: string
@@ -25,47 +27,34 @@ const Balance = () => {
   const [activeStep, setActiveStep] = useState(0)
   const [step1Status, setStep1Status] = useState(1)
   const [isStep1Ready, setIsStep1Ready] = useState(false)
+  const [isStep2Ready, setIsStep2Ready] = useState(false)
   const [ein, setEin] = useState<string | null>(null)
   const [isButtonTokenDisabled, setIsButtonTokenDisabled] = useState(true)
   const { data: hubSpotData, isFetching: isFetchingHubspot } =
     useGetHubspotDataQuery(
-      { ein: ein?.replace(/-/g, '') || '' }, // ✅ Remueve el guion antes de enviar
+      { ein: ein?.replace(/-/g, '') || '' },
       { skip: !ein }
     )
+
+  const [
+    postTransactions,
+    { data: transactions, isLoading: isLoadingTransactions },
+  ] = usePostTransactionsMutation()
+  console.log(transactions)
 
   const [registerCompany, { isLoading: isRegisterLoading }] =
     useRegisterCompanyMutation()
 
   const {
-    handleSubmit: handleRegisterSubmit,
-    control: registerControl,
-    watch,
-    formState: { errors: registerErrors },
-  } = useForm({
-    mode: 'onBlur',
-    defaultValues: {
-      llcName: '',
-      ein: '',
-      name: '',
-      surname: '',
-      email: '',
-      phone: '',
-    },
-  })
+    registerControl,
+    registerErrors,
+    watchRegister,
+    handleTokenSubmit,
+    tokenControl,
+    watchToken,
+  } = useBalanceForm()
 
-  const {
-    handleSubmit: handleTokenSubmit,
-    control: tokenControl,
-    formState: { errors: tokenErrors },
-    watch: watchToken,
-  } = useForm({
-    mode: 'onBlur',
-    defaultValues: {
-      token: '',
-    },
-  })
-
-  const registerValues = watch()
+  const registerValues = watchRegister()
   const tokenValues = watchToken()
 
   //////step1 check
@@ -90,11 +79,13 @@ const Balance = () => {
   useEffect(() => {
     if (tokenValues.token) {
       setIsButtonTokenDisabled(false)
+    } else {
+      setIsButtonTokenDisabled(true)
     }
   }, [tokenValues])
 
   const onNextStep = async () => {
-    if (step1Status === 4) {
+    if (step1Status === 4 && activeStep === 0) {
       const { llcName, ein, name, surname, email, phone } = registerValues
       const response = await registerCompany({
         first_name: name,
@@ -106,11 +97,15 @@ const Balance = () => {
       })
       if (response.data.company_name) {
         setActiveStep(activeStep + 1)
+        setEin(ein)
       }
     } else {
       setActiveStep(activeStep + 1)
     }
   }
+
+  const stepperButtonDisabled =
+    (activeStep === 0 && !isStep1Ready) || (activeStep === 1 && !isStep2Ready)
 
   return (
     <Box className={styles.balanceContainer}>
@@ -119,11 +114,10 @@ const Balance = () => {
       </Box>
       <Stepper
         activeStep={activeStep}
-        setActiveStep={setActiveStep}
-        isStep1Ready={isStep1Ready}
         step1Status={step1Status}
         onNextStep={onNextStep}
         isRegisterLoading={isRegisterLoading}
+        stepperButtonDisabled={stepperButtonDisabled}
       />
       {activeStep === 0 && (
         <Step1
@@ -141,6 +135,11 @@ const Balance = () => {
         <Step2
           tokenControl={tokenControl}
           isButtonTokenDisabled={isButtonTokenDisabled}
+          postTransactions={postTransactions}
+          handleTokenSubmit={handleTokenSubmit}
+          ein={ein}
+          isLoadingTransactions={isLoadingTransactions}
+          setIsStep2Ready={setIsStep2Ready}
         />
       )}
     </Box>

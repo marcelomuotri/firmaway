@@ -8,6 +8,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     alignItems: 'center',
     border: '1px solid transparent',
     borderRadius: theme.shape.borderRadius,
+    color: 'white',
     //fontWeight: 700,
     ':hover': {
       borderColor: theme.palette.primary.main,
@@ -30,6 +31,6 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     color: 'white',
   },
   disabled: {
-    color: '#C0A7A1',
+    color: '#C0A7A1!important',
   },
 }))

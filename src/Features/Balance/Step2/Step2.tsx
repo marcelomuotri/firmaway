@@ -9,15 +9,40 @@ import Info from '../../../assets/Info'
 interface Step2Props {
   tokenControl: any
   isButtonTokenDisabled: boolean
+  postTransactions: any
+  handleTokenSubmit: any
+  ein: string | null
+  isLoadingTransactions: boolean
+  setIsStep2Ready: any
 }
 
-const Step2 = ({ tokenControl, isButtonTokenDisabled }: Step2Props) => {
+const Step2 = ({
+  tokenControl,
+  isButtonTokenDisabled,
+  postTransactions,
+  handleTokenSubmit,
+  ein,
+  isLoadingTransactions,
+  setIsStep2Ready,
+}: Step2Props) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
 
-  const onCheckToken = () => {
-    console.log('onCheckToken')
+  const onCheckToken = async (data: any) => {
+    try {
+      const response = await postTransactions({ api_token: data.token, ein })
+      if (response.data) setIsStep2Ready(true)
+    } catch (error) {
+      console.log(error)
+    }
   }
+
+  const getCopyConnectButton = () => {
+    if (isLoadingTransactions) {
+      return t('connecting')
+    } else return t('connect_now')
+  }
+
   return (
     <Box className={styles.step2Container}>
       <Box className={styles.step2Content}>
@@ -43,11 +68,12 @@ const Step2 = ({ tokenControl, isButtonTokenDisabled }: Step2Props) => {
         </Box>
 
         <FButton
-          title={t('connect_now')}
+          title={getCopyConnectButton()}
           fullWidth
           endIcon={<Tick />}
-          onClick={onCheckToken}
+          onClick={handleTokenSubmit(onCheckToken)}
           disabled={isButtonTokenDisabled}
+          loading={isLoadingTransactions}
         />
 
         <Box

@@ -50,10 +50,5 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     fontSize: '12px',
     lineHeight: '18px',
     fontWeight: 600,
-
-    '&:disabled': {
-      backgroundColor: theme.palette.action.disabled,
-      color: theme.palette.action.disabledBackground,
-    },
   },
 }))

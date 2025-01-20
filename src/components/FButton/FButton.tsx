@@ -35,7 +35,7 @@ const FButton = ({
   ...props
 }: SharedBtnProps) => {
   const { classes: styles } = useStyles()
-
+  //props.loading = true
   return (
     <Button
       href={props.href}
@@ -54,10 +54,10 @@ const FButton = ({
       endIcon={!props.loading && props.endIcon}
     >
       {props.loading ? (
-        <Box sx={{ display: 'flex', gap: 1 }}>
+        <Box sx={{ display: 'flex', gap: 6 }}>
           <Typography
             variant={'bodyRegular'}
-            className={`${styles.title} ${props.disabled ? styles.disabled : ''} ${props.textClassName || ''}`}
+            className={`${styles.title} ${props.disabled || props.loading ? styles.disabled : ''} ${props.textClassName || ''}`}
           >
             {props.title}
           </Typography>
@@ -66,7 +66,7 @@ const FButton = ({
       ) : props.title ? (
         <Typography
           variant={'bodyRegular'}
-          className={`${styles.title} ${props.disabled ? styles.disabled : ''} ${props.textClassName || ''}`}
+          className={`${styles.title} ${props.disabled || props.loading ? styles.disabled : ''} ${props.textClassName || ''}`}
         >
           {props.title}
         </Typography>

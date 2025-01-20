@@ -5,20 +5,18 @@ import FButton from '../FButton/FButton'
 
 interface StepperProps {
   activeStep: number
-  setActiveStep: (activeStep: number) => void
-  isStep1Ready: boolean
   step1Status: number
   onNextStep: () => void
   isRegisterLoading: boolean
+  stepperButtonDisabled: boolean
 }
 
 const Stepper = ({
   activeStep,
-  setActiveStep,
-  isStep1Ready,
   step1Status,
   onNextStep,
   isRegisterLoading,
+  stepperButtonDisabled,
 }: StepperProps) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
@@ -29,6 +27,14 @@ const Stepper = ({
     { label: t('clasify') },
     { label: t('revise') },
   ]
+
+  const getContinueButtonCopy = () => {
+    if (activeStep === 0 && step1Status === 4) {
+      return t('register')
+    } else {
+      return t('continue')
+    }
+  }
 
   return (
     <Box className={styles.stepperContainer}>
@@ -54,10 +60,9 @@ const Stepper = ({
         })}
       </Box>
       <FButton
-        disabled={!isStep1Ready}
-        //className={styles.continueButton}
+        disabled={stepperButtonDisabled}
         onClick={onNextStep}
-        title={step1Status === 4 ? t('register') : t('continue')}
+        title={getContinueButtonCopy()}
         loading={isRegisterLoading}
         size={'small'}
         textClassName={styles.continueButton}
