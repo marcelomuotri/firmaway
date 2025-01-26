@@ -1,4 +1,13 @@
-import { Box, Fade, IconButton, Link, Modal, Typography } from '@mui/material'
+import {
+  Alert,
+  Box,
+  Fade,
+  IconButton,
+  Link,
+  Modal,
+  Snackbar,
+  Typography,
+} from '@mui/material'
 import { useStyles } from './step1.styles'
 import { useTranslation } from 'react-i18next'
 import FInput from '../../../components/FInput'
@@ -15,6 +24,7 @@ interface Step1Props {
   handleTokenSubmit: any
   isLoadingTransactions: boolean
   setIsStep1Ready: any
+  isStep1Ready: boolean
 }
 
 const Step1 = ({
@@ -24,10 +34,12 @@ const Step1 = ({
   handleTokenSubmit,
   isLoadingTransactions,
   setIsStep1Ready,
+  isStep1Ready,
 }: Step1Props) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
   const [isOpenModal, setIsOpenModal] = useState(false)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
 
   const onCheckToken = async (data: any) => {
     try {
@@ -36,8 +48,10 @@ const Step1 = ({
         year: data.year,
       })
       if (response.data) setIsStep1Ready(true)
+      else setOpenSnackbar(true)
     } catch (error) {
       console.log(error)
+      setOpenSnackbar(true)
     }
   }
 
@@ -50,6 +64,22 @@ const Step1 = ({
   return (
     <Fade in={true} timeout={500}>
       <Box className={styles.step2Container}>
+        <Snackbar
+          open={openSnackbar}
+          autoHideDuration={5000} // 4 segundos
+          onClose={() => setOpenSnackbar(false)}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        >
+          <Alert
+            //onClose={handleClose}
+            severity='error'
+            variant='filled'
+            sx={{ width: '100%' }}
+          >
+            Token inválido
+          </Alert>
+        </Snackbar>
+
         <Modal open={isOpenModal}>
           <Box
             sx={{
@@ -132,14 +162,24 @@ const Step1 = ({
             />
           </Box>
 
-          <FButton
-            title={getCopyConnectButton()}
-            fullWidth
-            endIcon={<Tick />}
-            onClick={handleTokenSubmit(onCheckToken)}
-            disabled={isButtonTokenDisabled}
-            loading={isLoadingTransactions}
-          />
+          {isStep1Ready ? (
+            <FButton
+              title='Conexion exitosa'
+              fullWidth
+              endIcon={<Tick />}
+              onClick={() => {}}
+              sx={{ backgroundColor: '#5EA17B', color: 'white' }}
+            />
+          ) : (
+            <FButton
+              title={getCopyConnectButton()}
+              fullWidth
+              endIcon={<Tick />}
+              onClick={handleTokenSubmit(onCheckToken)}
+              disabled={isButtonTokenDisabled}
+              loading={isLoadingTransactions}
+            />
+          )}
 
           <Box
             sx={{

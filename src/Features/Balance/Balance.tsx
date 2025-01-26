@@ -94,6 +94,16 @@ const Balance = () => {
     }
   }, [tokenValues])
 
+  useEffect(() => {
+    if (isStep1Ready && activeStep === 1) {
+      const timeout = setTimeout(() => {
+        setActiveStep(activeStep + 1) // Pasa al siguiente paso después de 3 segundos
+      }, 3000) // 3000ms = 3 segundos
+
+      return () => clearTimeout(timeout) // Limpia el timeout si el componente se desmonta
+    }
+  }, [isStep1Ready])
+
   const onNextStep = async () => {
     if (activeStep === 2 && !isStep2Ready) {
       setCurrentIndex2(currentIndex2 + 1)
@@ -151,6 +161,7 @@ const Balance = () => {
           handleTokenSubmit={handleTokenSubmit}
           isLoadingTransactions={isLoadingTransactions}
           setIsStep1Ready={setIsStep1Ready}
+          isStep1Ready={isStep1Ready}
         />
       )}
       {activeStep === 2 && (
