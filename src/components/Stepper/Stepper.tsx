@@ -2,18 +2,20 @@ import { Box, Button, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
 import { useStyles } from './stepper.styles'
 import FButton from '../FButton/FButton'
+import Info from '../../assets/Info'
+import DownloadIcon from '../../assets/DownloadIcon'
 
 interface StepperProps {
   activeStep: number
   onNextStep: () => void
-  isRegisterLoading: boolean
+  isStepperLoading: boolean
   stepperButtonDisabled: boolean
 }
 
 const Stepper = ({
   activeStep,
   onNextStep,
-  isRegisterLoading,
+  isStepperLoading,
   stepperButtonDisabled,
 }: StepperProps) => {
   const { classes: styles } = useStyles()
@@ -50,10 +52,11 @@ const Stepper = ({
         })}
       </Box>
       <FButton
+        endIcon={activeStep === 4 && <DownloadIcon />}
         disabled={stepperButtonDisabled}
         onClick={onNextStep}
-        title={t('continue')}
-        loading={isRegisterLoading}
+        title={activeStep === 4 ? t('download') : t('continue')}
+        loading={isStepperLoading}
         size={'small'}
         textClassName={styles.continueButton}
       />

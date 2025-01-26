@@ -56,7 +56,7 @@ interface InputWithTitleProps {
 const InputWithTitle: React.FC<InputWithTitleProps> = ({ label, children }) => {
   return (
     <Box
-      sx={{ display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}
+      sx={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}
     >
       {label && (
         <Typography

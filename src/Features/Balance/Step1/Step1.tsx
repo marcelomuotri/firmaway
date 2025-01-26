@@ -1,10 +1,12 @@
-import { Box, Link, Typography } from '@mui/material'
+import { Box, IconButton, Link, Modal, Typography } from '@mui/material'
 import { useStyles } from './step1.styles'
 import { useTranslation } from 'react-i18next'
 import FInput from '../../../components/FInput'
 import FButton from '../../../components/FButton/FButton'
 import Tick from '../../../assets/Tick'
 import Info from '../../../assets/Info'
+import { useState } from 'react'
+import CloseIcon from '@mui/icons-material/Close'
 
 interface Step1Props {
   tokenControl: any
@@ -25,6 +27,7 @@ const Step1 = ({
 }: Step1Props) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
+  const [isOpenModal, setIsOpenModal] = useState(false)
 
   const onCheckToken = async (data: any) => {
     try {
@@ -46,6 +49,44 @@ const Step1 = ({
 
   return (
     <Box className={styles.step2Container}>
+      <Modal open={isOpenModal}>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 500,
+            borderRadius: '13px',
+            padding: '20px 32px',
+            backgroundColor: 'white',
+          }}
+        >
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <IconButton
+              sx={{ color: 'black', marginBottom: 16 }}
+              onClick={() => setIsOpenModal(false)}
+            >
+              <CloseIcon color='black' />
+            </IconButton>
+          </Box>
+          <Typography className={styles.modalTitle}>
+            {t('tutorial_title')}
+          </Typography>
+          <Typography className={styles.modalSubTitle}>
+            {t('tutorial_subTitle')}
+          </Typography>
+          <iframe
+            width='500'
+            height='315'
+            src='https://www.youtube.com/embed/dQw4w9WgXcQ'
+            title='YouTube video player'
+            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+            allowFullScreen
+            frameBorder='0'
+          ></iframe>
+        </Box>
+      </Modal>
       <Box className={styles.step2Content}>
         <Typography className={styles.title}>{t('step2_title')}</Typography>
         <Typography className={styles.subTitle}>
@@ -55,7 +96,10 @@ const Step1 = ({
           <Typography className={styles.tutorial}>
             {t('step2_dontKnowHow')}
           </Typography>
-          <Typography className={styles.tutorialLink}>
+          <Typography
+            onClick={() => setIsOpenModal(true)}
+            className={styles.tutorialLink}
+          >
             {t('step2_learn')}
           </Typography>
         </Box>

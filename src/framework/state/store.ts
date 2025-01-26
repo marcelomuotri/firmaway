@@ -5,6 +5,7 @@ import { hubspotService } from './services/hubspotApi'
 import { transactionsApi } from './services/transactionsApi'
 import { tagService } from './services/tagService'
 import { generateAi } from './services/generateAIApi'
+import { createCSVApi } from './services/createCSV'
 
 export const store = configureStore({
   reducer: {
@@ -12,13 +13,15 @@ export const store = configureStore({
     [transactionsApi.reducerPath]: transactionsApi.reducer,
     [tagService.reducerPath]: tagService.reducer,
     [generateAi.reducerPath]: generateAi.reducer,
+    [createCSVApi.reducerPath]: createCSVApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
       .concat(hubspotService.middleware)
       .concat(transactionsApi.middleware)
       .concat(tagService.middleware)
-      .concat(generateAi.middleware),
+      .concat(generateAi.middleware)
+      .concat(createCSVApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

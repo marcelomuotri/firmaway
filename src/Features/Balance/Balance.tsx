@@ -15,6 +15,8 @@ import {
   usePostGenerateAiMutation,
 } from '../../framework/state/services/generateAIApi'
 import Step3 from './Step3/Step3'
+import Step4 from './Step4/Step4'
+import { usePostCSVMutation } from '../../framework/state/services/createCSV'
 
 export interface HubSpotUser {
   hubspot_id?: string
@@ -30,10 +32,11 @@ const Balance = () => {
   const [activeStep, setActiveStep] = useState(1)
   //const [step1Status, setStep1Status] = useState(1)
   //const [isStep1Ready, setIsStep1Ready] = useState(false)
-  const [isStep1Ready, setIsStep1Ready] = useState(false)
   const [isButtonTokenDisabled, setIsButtonTokenDisabled] = useState(true)
   const { data: tags } = useGetTagsQuery({})
+  const [isStep1Ready, setIsStep1Ready] = useState(false)
   const [isStep2Ready, setIsStep2Ready] = useState(false)
+  const [isStep4Ready, setIsStep4Ready] = useState(false)
   const [currentIndex2, setCurrentIndex2] = useState(0)
   const [tableDatastep2, setTableDataStep2] = useState<any[]>([])
   const [tableDatastep3, setTableDataStep3] = useState<any[]>([])
@@ -57,11 +60,29 @@ const Balance = () => {
     { data: transactionsWithDesciption, isLoading: isGenerateAiLoading },
   ] = usePostGenerateAiMutation()
 
-  const { watchRegister, handleTokenSubmit, tokenControl, watchToken } =
-    useBalanceForm()
+  const [postCSV, { data: csvData, isLoading: isCSVLoading }] =
+    usePostCSVMutation()
+
+  const {
+    watchRegister,
+    registerControl,
+    registerErrors,
+    handleTokenSubmit,
+    tokenControl,
+    watchToken,
+  } = useBalanceForm()
 
   const registerValues = watchRegister()
   const tokenValues = watchToken()
+
+  useEffect(() => {
+    const allFieldsFilled = Object.values(registerValues).every(
+      (value) => value !== '' && value !== null && value !== undefined
+    )
+    const hasErrors = Object.keys(registerErrors).length > 0
+
+    setIsStep4Ready(allFieldsFilled && !hasErrors)
+  }, [registerValues, registerErrors])
 
   useEffect(() => {
     if (tokenValues.token && tokenValues.year) {
@@ -87,10 +108,24 @@ const Balance = () => {
       const filteredTransactions = filterTransactions(tableDatastep2)
       generateAi(filteredTransactions)
       setActiveStep(activeStep + 1)
+    } else if (activeStep === 4) {
+      registerCompany({
+        first_name: registerValues.name,
+        last_name: registerValues.surname,
+        email: registerValues.email,
+        phone: registerValues.phone,
+        ein: registerValues.ein.replace(/-/g, ''),
+        company_name: registerValues.llcName,
+      })
+      const data = await postCSV([{ transacciones: tableDatastep3 }])
+      if (data) window.location.href = 'https://www.google.com'
     } else setActiveStep(activeStep + 1)
   }
 
-  const stepperButtonDisabled = !isStep1Ready
+  const stepperButtonDisabled =
+    (activeStep === 1 && !isStep1Ready) || (activeStep === 4 && !isStep4Ready)
+
+  const isStepperLoading = isRegisterLoading || isCSVLoading
 
   return (
     <Box className={styles.balanceContainer}>
@@ -100,7 +135,7 @@ const Balance = () => {
       <Stepper
         activeStep={activeStep}
         onNextStep={onNextStep}
-        isRegisterLoading={isRegisterLoading}
+        isStepperLoading={isStepperLoading}
         stepperButtonDisabled={stepperButtonDisabled}
       />
 
@@ -133,6 +168,12 @@ const Balance = () => {
           tags={tags}
           tableDatastep3={tableDatastep3}
           setTableDataStep3={setTableDataStep3}
+        />
+      )}
+      {activeStep === 4 && (
+        <Step4
+          registerControl={registerControl}
+          registerErrors={registerErrors}
         />
       )}
     </Box>

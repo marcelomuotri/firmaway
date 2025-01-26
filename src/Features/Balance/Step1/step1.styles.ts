@@ -42,4 +42,14 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     fontWeight: 600,
     cursor: 'pointer',
   },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 600,
+    lineHeight: '26px',
+    marginBottom: 16,
+  },
+  modalSubTitle: {
+    lineHeight: '20px',
+    marginBottom: 24,
+  },
 }))

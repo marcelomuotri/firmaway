@@ -47,5 +47,17 @@
   "step3_subTitle3": "Cuentas de Inversiónes",
   "step3_text3": "Elige <strong>Inversiones 📊</strong> para aquellas pertenecientes a la empresa. Deja sin clasificar aquellas que no correspondan a estas categorías; te ayudaremos en los siguientes pasos.",
   "step3_subTitle4": "Cuentas de Préstamos",
-  "step3_text4": "Elige <strong>Préstamos 🤝</strong> para las de los propietarios. Deja sin clasificar aquellas que no correspondan a estas categorías; te ayudaremos en los siguientes pasos."
+  "step3_text4": "Elige <strong>Préstamos 🤝</strong> para las de los propietarios. Deja sin clasificar aquellas que no correspondan a estas categorías; te ayudaremos en los siguientes pasos.",
+  "step4_balanceReady": "¡Tu balance contable está listo! 📩",
+  "step4_subtitle": "Solo necesitamos algunos datos para personalizar tu balance contable. Tranquilo, los usaremos únicamente para gestionar tu LLC.",
+  "llc_placeholder": "Escribe el nombre de tu LLC",
+  "ein_placeholder": "Escribe el EIN de tu LLC",
+  "name_placeholder": "Ingresa tu nombre",
+  "surname_placeholder": "Ingresa tus apellidos",
+  "email_placeholder": "Introduce tu correo electrónico",
+  "phone_placeholder": "Introduce tu teléfono",
+  "step4_footer": "Solicitamos estos datos únicamente para gestionar tu LLC y verificación de identidad, garantizando su uso exclusivo para estos fines. ",
+  "download": "Descargar",
+  "tutorial_title": "¿Cómo obtener mi API Key con Mercury?",
+  "tutorial_subTitle": "Tu seguridad es nuestra prioridad. Genera una API Key de solo lectura para conectar tu cuenta Mercury de forma cifrada y segura."
 }
