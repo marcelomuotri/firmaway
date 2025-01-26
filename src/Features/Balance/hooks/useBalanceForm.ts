@@ -29,6 +29,7 @@ export const useBalanceForm = () => {
     mode: 'onBlur',
     defaultValues: {
       token: '',
+      year: '',
     },
   })
 

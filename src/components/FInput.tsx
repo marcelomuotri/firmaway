@@ -37,7 +37,7 @@ interface GenericInputProps {
     | 'checkboxGroup'
     | 'ein' // ✅ Nuevo tipo para EIN
   placeholder?: string
-  options?: { value: string; label: string }[]
+  options?: { value: string | boolean; label: string }[]
   defaultValue?: any
   helperText?: string
   width?: string | number
@@ -188,6 +188,50 @@ const FInput: React.FC<GenericInputProps> = ({
                 ))}
               </Select>
             </InputWithTitle>
+            {helperText && (
+              <FormHelperText>
+                {error ? error.message : helperText}
+              </FormHelperText>
+            )}
+          </FormControl>
+        )
+      case 'radio':
+        return (
+          <FormControl
+            component='fieldset'
+            //className={classes.input}
+            error={!!error}
+            style={{ width }} // Aplicar el ancho personalizado
+          >
+            <Typography
+              sx={{
+                color: theme.palette.common.black,
+                fontWeight: 600,
+                fontSize: 14,
+              }}
+            >
+              {label}
+            </Typography>
+            <RadioGroup {...field} {...props} sx={{ columnGap: 24 }} row>
+              {options.map((option) => (
+                <FormControlLabel
+                  key={option.value}
+                  value={option.value}
+                  control={
+                    <Radio
+                      size='small'
+                      sx={{
+                        color: '#DFE5E9', // Color cuando NO está seleccionado
+                        '&.Mui-checked': {
+                          color: '#024675!important', // Color cuando está seleccionado
+                        },
+                      }}
+                    />
+                  }
+                  label={option.label}
+                />
+              ))}
+            </RadioGroup>
             {helperText && (
               <FormHelperText>
                 {error ? error.message : helperText}

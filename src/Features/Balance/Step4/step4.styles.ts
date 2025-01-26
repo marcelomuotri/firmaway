@@ -2,14 +2,14 @@ import { makeStyles } from 'tss-react/mui'
 import { Theme } from '@mui/material'
 
 export const useStyles = makeStyles()((theme: Theme) => ({
-  step2Container: {
+  step1Container: {
     background: 'white',
     padding: '45px 90px',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
-  step2Content: {
+  step1Content: {
     width: '336px',
     display: 'flex',
     flexDirection: 'column',
@@ -23,23 +23,51 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     marginBottom: 8,
     textAlign: 'center',
   },
+  inputContainer: {
+    width: '100%',
+    marginBottom: 27,
+  },
   subTitle: {
     textAlign: 'center',
     lineHeight: '20px',
     marginBottom: 16,
   },
-  tutorialContainer: {
+  buttonContainer: {
+    width: '100%',
+    marginBottom: 12,
+  },
+  footerContainer: {
     display: 'flex',
     gap: 4,
     justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 24,
   },
-  tutorial: {},
-  tutorialLink: {
+  company: {
+    fontSize: 16,
+    fontWeight: 700,
+    lineHeight: '32px',
+    textAlign: 'center',
+  },
+  ein: {
+    fontSize: 12,
+    textAlign: 'center',
+    color: '#4B4E51',
+    marginBottom: 12,
+  },
+  footer: {
+    fontSize: 12,
+    lineHeight: '16px',
+  },
+  footerLink: {
+    fontSize: 12,
     lineHeight: '16px',
     color: theme.palette.primary.main,
     fontWeight: 600,
     cursor: 'pointer',
+  },
+  step4InputContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 16,
+    marginBottom: 32,
   },
 }))

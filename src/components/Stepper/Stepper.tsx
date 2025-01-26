@@ -5,7 +5,6 @@ import FButton from '../FButton/FButton'
 
 interface StepperProps {
   activeStep: number
-  step1Status: number
   onNextStep: () => void
   isRegisterLoading: boolean
   stepperButtonDisabled: boolean
@@ -13,7 +12,6 @@ interface StepperProps {
 
 const Stepper = ({
   activeStep,
-  step1Status,
   onNextStep,
   isRegisterLoading,
   stepperButtonDisabled,
@@ -22,27 +20,19 @@ const Stepper = ({
   const { t } = useTranslation()
 
   const steps = [
-    { label: t('start') },
     { label: t('connect') },
     { label: t('clasify') },
     { label: t('revise') },
+    { label: t('finalize') },
   ]
-
-  const getContinueButtonCopy = () => {
-    if (activeStep === 0 && step1Status === 4) {
-      return t('register')
-    } else {
-      return t('continue')
-    }
-  }
 
   return (
     <Box className={styles.stepperContainer}>
-      <Button className={styles.cancelButton}>Cancelar</Button>
+      <Button className={styles.cancelButton}></Button>
       <Box className={styles.stepper}>
         {steps.map((step, index) => {
-          const isCompleted = index < activeStep
-          const isCurrent = index === activeStep
+          const isCompleted = index + 1 < activeStep
+          const isCurrent = index + 1 === activeStep
           const isActiveOrCompleted = isCompleted || isCurrent
           return (
             <Box
@@ -62,7 +52,7 @@ const Stepper = ({
       <FButton
         disabled={stepperButtonDisabled}
         onClick={onNextStep}
-        title={getContinueButtonCopy()}
+        title={t('continue')}
         loading={isRegisterLoading}
         size={'small'}
         textClassName={styles.continueButton}

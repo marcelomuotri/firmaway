@@ -15,6 +15,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     //alignItems: 'center',
     color: theme.palette.text.primary,
     maxWidth: '1200px',
+    width: '100%',
   },
   step3Title: {
     fontSize: '20px',

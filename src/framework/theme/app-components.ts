@@ -127,22 +127,52 @@ export const appComponents: Components<Omit<Theme, 'components'>> = {
       },
     },
   },
-  MuiSvgIcon: {
-    styleOverrides: {
-      root: {
-        color: theme.palette.text.primary,
-      },
-    },
-  },
   MuiDataGrid: {
     styleOverrides: {
-      virtualScroller: {
-        borderRadius: theme.shape.borderRadius,
-      },
       columnHeaderRow: {
-        backgroundColor: '#EFEFEF!important',
-        color: theme.palette.common.black,
-        fontWeight: 500,
+        backgroundColor: '#F8F8FA',
+        color: '#131212',
+        fontWeight: 600,
+        FontSize: 14,
+      },
+      root: {
+        '& .MuiSelect-root': {
+          backgroundColor: 'white', // Fondo de los selects
+          //color: '#1e88e5', // Color del texto
+          borderRadius: '0px', // Bordes redondeados
+          //padding: '4px 8px', // Espaciado interno
+          borderColor: 'transparent!important',
+          border: 'none',
+        },
+        '& .MuiSelect-icon': {
+          //color: '#1e88e5', // Color del ícono del dropdown
+        },
+        '& .MuiOutlinedInput-input': {
+          padding: '10px !important', // Elimina el padding interno
+          border: 'none',
+        },
+        '& .MuiDataGrid-cell': {
+          display: 'flex',
+          alignItems: 'center',
+          //justifyContent: 'center',
+        },
+        '& .MuiDataGrid-cell:focus': {
+          outline: 'none', // Elimina el borde de enfoque al hacer clic
+          border: 'none',
+          boxShadow: 'none',
+        },
+        '& .MuiOutlinedInput-notchedOutline': {
+          borderColor: 'white!important', // Cambia el color del borde
+        },
+        '& .MuiDataGrid-cell--editing:focus-within': {
+          outline: 'none!important', // Elimina el borde de edición
+        },
+        '& .MuiDataGrid-cell--editing': {
+          boxShadow: 'none !important', // Elimina cualquier sombra
+          backgroundColor: 'transparent', // Opcional: evita cambios de color de fondo
+          display: 'flex',
+          alignItems: 'center',
+        },
       },
     },
   },

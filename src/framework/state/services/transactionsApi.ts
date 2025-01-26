@@ -21,12 +21,12 @@ export const transactionsApi = createApi({
   endpoints: (builder) => ({
     postTransactions: builder.mutation<
       Transaction[],
-      { api_token: string; ein: string }
+      { api_token: string; year: string }
     >({
-      query: ({ api_token, ein }) => ({
+      query: ({ api_token, year }) => ({
         url: '/webhook/46c08951-f33c-402e-811f-e7bad609f26d',
         method: 'POST',
-        body: { api_token, ein: ein.replace(/-/g, '') }, // ✅ Remueve el guion del EIN antes de enviarlo
+        body: { api_token, year }, // ✅ Remueve el guion del EIN antes de enviarlo
       }),
       transformResponse: (response: Transaction[]) => response, // ✅ Guarda la respuesta en caché
       providesTags: ['Transactions'], // ✅ Permite recuperar los datos sin hacer otra petición
