@@ -1,4 +1,4 @@
-import { Box, IconButton, Link, Modal, Typography } from '@mui/material'
+import { Box, Fade, IconButton, Link, Modal, Typography } from '@mui/material'
 import { useStyles } from './step1.styles'
 import { useTranslation } from 'react-i18next'
 import FInput from '../../../components/FInput'
@@ -48,122 +48,128 @@ const Step1 = ({
   }
 
   return (
-    <Box className={styles.step2Container}>
-      <Modal open={isOpenModal}>
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 500,
-            borderRadius: '13px',
-            padding: '20px 32px',
-            backgroundColor: 'white',
-          }}
-        >
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <IconButton
-              sx={{ color: 'black', marginBottom: 16 }}
-              onClick={() => setIsOpenModal(false)}
-            >
-              <CloseIcon color='black' />
-            </IconButton>
-          </Box>
-          <Typography className={styles.modalTitle}>
-            {t('tutorial_title')}
-          </Typography>
-          <Typography className={styles.modalSubTitle}>
-            {t('tutorial_subTitle')}
-          </Typography>
-          <iframe
-            width='500'
-            height='315'
-            src='https://www.youtube.com/embed/dQw4w9WgXcQ'
-            title='YouTube video player'
-            allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-            allowFullScreen
-            frameBorder='0'
-          ></iframe>
-        </Box>
-      </Modal>
-      <Box className={styles.step2Content}>
-        <Typography className={styles.title}>{t('step2_title')}</Typography>
-        <Typography className={styles.subTitle}>
-          {t('step2_subtitle')}
-        </Typography>
-        <Box className={styles.tutorialContainer}>
-          <Typography className={styles.tutorial}>
-            {t('step2_dontKnowHow')}
-          </Typography>
-          <Typography
-            onClick={() => setIsOpenModal(true)}
-            className={styles.tutorialLink}
+    <Fade in={true} timeout={500}>
+      <Box className={styles.step2Container}>
+        <Modal open={isOpenModal}>
+          <Box
+            sx={{
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              width: 500,
+              borderRadius: '13px',
+              padding: '20px 32px',
+              backgroundColor: 'white',
+            }}
           >
-            {t('step2_learn')}
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <IconButton
+                sx={{ color: 'black', marginBottom: 16 }}
+                onClick={() => setIsOpenModal(false)}
+              >
+                <CloseIcon color='black' />
+              </IconButton>
+            </Box>
+            <Typography className={styles.modalTitle}>
+              {t('tutorial_title')}
+            </Typography>
+            <Typography className={styles.modalSubTitle}>
+              {t('tutorial_subTitle')}
+            </Typography>
+            <iframe
+              width='500'
+              height='315'
+              src='https://www.youtube.com/embed/dQw4w9WgXcQ'
+              title='YouTube video player'
+              allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
+              allowFullScreen
+              frameBorder='0'
+            ></iframe>
+          </Box>
+        </Modal>
+        <Box className={styles.step2Content}>
+          <Typography className={styles.title}>{t('step2_title')}</Typography>
+          <Typography className={styles.subTitle}>
+            {t('step2_subtitle')}
           </Typography>
-        </Box>
-        <Box
-          style={{
-            width: '100%',
-            marginBottom: 27,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 16,
-          }}
-        >
-          <FInput
-            type='text'
-            control={tokenControl}
-            name='token'
-            placeholder='Ingresa tu API Key'
-            label='API Key'
-          />
-          <FInput
-            type='select'
-            control={tokenControl}
-            name='year'
-            label='Periodo fiscal'
-            options={['2021', '2022', '2023', '2024', '2025'].map((year) => ({
-              value: year,
-              label: year,
-            }))} // ✅ Años fiscales
-          />
-        </Box>
+          <Box className={styles.tutorialContainer}>
+            <Typography className={styles.tutorial}>
+              {t('step2_dontKnowHow')}
+            </Typography>
+            <Typography
+              onClick={() => setIsOpenModal(true)}
+              className={styles.tutorialLink}
+            >
+              {t('step2_learn')}
+            </Typography>
+          </Box>
+          <Box
+            style={{
+              width: '100%',
+              marginBottom: 27,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 16,
+            }}
+          >
+            <FInput
+              type='text'
+              control={tokenControl}
+              name='token'
+              placeholder='Ingresa tu API Key'
+              label='API Key'
+            />
+            <FInput
+              type='select'
+              control={tokenControl}
+              name='year'
+              label='Periodo fiscal'
+              options={['2021', '2022', '2023', '2024', '2025'].map((year) => ({
+                value: year,
+                label: year,
+              }))} // ✅ Años fiscales
+            />
+          </Box>
 
-        <FButton
-          title={getCopyConnectButton()}
-          fullWidth
-          endIcon={<Tick />}
-          onClick={handleTokenSubmit(onCheckToken)}
-          disabled={isButtonTokenDisabled}
-          loading={isLoadingTransactions}
-        />
+          <FButton
+            title={getCopyConnectButton()}
+            fullWidth
+            endIcon={<Tick />}
+            onClick={handleTokenSubmit(onCheckToken)}
+            disabled={isButtonTokenDisabled}
+            loading={isLoadingTransactions}
+          />
 
-        <Box
-          sx={{
-            display: 'flex',
-            paddingTop: '12px',
-            fontSize: '12px',
-            color: '#024675',
-            gap: 6,
-          }}
-        >
-          <Info />
-          <Typography>
-            Al continuar, aceptas los{' '}
-            <Link href='/terms' underline='hover' sx={{ fontWeight: 'bold' }}>
-              Términos de servicio
-            </Link>{' '}
-            y la{' '}
-            <Link href='/privacy' underline='hover' sx={{ fontWeight: 'bold' }}>
-              Política de privacidad
-            </Link>{' '}
-            de Firmaway.
-          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              paddingTop: '12px',
+              fontSize: '12px',
+              color: '#024675',
+              gap: 6,
+            }}
+          >
+            <Info />
+            <Typography>
+              Al continuar, aceptas los{' '}
+              <Link href='/terms' underline='hover' sx={{ fontWeight: 'bold' }}>
+                Términos de servicio
+              </Link>{' '}
+              y la{' '}
+              <Link
+                href='/privacy'
+                underline='hover'
+                sx={{ fontWeight: 'bold' }}
+              >
+                Política de privacidad
+              </Link>{' '}
+              de Firmaway.
+            </Typography>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </Fade>
   )
 }
 

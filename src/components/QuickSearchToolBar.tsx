@@ -27,9 +27,15 @@ const QuickSearchToolbar = () => {
           padding: '8px 16px',
           border: '1px solid #EBEDEE',
           '& input': { fontSize: '16px', borderBottom: 'none' },
-          '& .MuiInput-root': { borderBottom: 'none' },
+          '& .MuiInput-root': { borderBottom: 'none!important' },
+          '& .MuiInput-root:hover': {
+            borderBottom: 'none!important',
+            borderBottomColor: 'transparent!important',
+          },
           '& .MuiInput-underline:before': { borderBottom: 'none' },
-          '& .MuiInput-underline:hover:before': { borderBottom: 'none' },
+          '& .MuiInput-underline:hover:before': {
+            borderBottom: 'none!important',
+          },
           '& .MuiInput-underline:after': { borderBottom: 'none' },
         }}
       />

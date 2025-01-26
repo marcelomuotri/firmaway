@@ -5,6 +5,7 @@ import {
   GridCellParams,
   GridCellModes,
 } from '@mui/x-data-grid'
+import { Box, Fade } from '@mui/material'
 
 /**
  * Componente reutilizable para DataGrid con edición en un solo click.
@@ -72,25 +73,29 @@ export default function SingleClickDataGrid({
   )
 
   return (
-    <DataGrid
-      rows={rows}
-      columns={columns}
-      cellModesModel={cellModesModel}
-      onCellModesModelChange={handleCellModesModelChange}
-      onCellClick={handleCellClick}
-      sx={{
-        // Quita el outline al enfocar cualquier celda
-        '& .MuiDataGrid-cell:focus': {
-          outline: 'none !important',
-        },
-        // Si quieres también quitarlo cuando se edita la celda:
-        '& .MuiDataGrid-cell:focus-within': {
-          outline: 'none !important',
-        },
-      }}
-      //processRowUpdate={handleProcessRowUpdate}
-      //editMode='cell'
-      {...props} // Deja pasar props extra
-    />
+    <Fade in={true} timeout={1500}>
+      <Box>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          cellModesModel={cellModesModel}
+          onCellModesModelChange={handleCellModesModelChange}
+          onCellClick={handleCellClick}
+          sx={{
+            // Quita el outline al enfocar cualquier celda
+            '& .MuiDataGrid-cell:focus': {
+              outline: 'none !important',
+            },
+            // Si quieres también quitarlo cuando se edita la celda:
+            '& .MuiDataGrid-cell:focus-within': {
+              outline: 'none !important',
+            },
+          }}
+          //processRowUpdate={handleProcessRowUpdate}
+          //editMode='cell'
+          {...props} // Deja pasar props extra
+        />
+      </Box>
+    </Fade>
   )
 }

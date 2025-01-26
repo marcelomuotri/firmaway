@@ -1,4 +1,4 @@
-import { Box, TextField } from '@mui/material'
+import { Box, Fade, LinearProgress, TextField } from '@mui/material'
 import { useStyles } from './step3.styles'
 import Table from '../../../components/Table/Table'
 import StepTitle from '../../../components/StepTitle'
@@ -19,7 +19,6 @@ const Step3 = ({
 
   const handleSelectChange = (rowId, newTagName) => {
     const selectedTag = tags.find((tag) => tag.tag_name === newTagName)
-    console.log(newTagName, selectedTag)
 
     setTableDataStep3((prevData) =>
       prevData.map((row) =>
@@ -35,8 +34,6 @@ const Step3 = ({
   }
 
   const handleDescriptionChange = (params, newDescription) => {
-    console.log('Cambiando descripción:', newDescription)
-
     params.api.setEditCellValue({
       id: params.id,
       field: params.field,
@@ -135,40 +132,47 @@ const Step3 = ({
   ]
   const { classes: styles } = useStyles()
   return (
-    <Box className={styles.step3Container}>
-      {isGenerateAiLoading ? (
-        <Box>loading...</Box>
-      ) : (
-        <Box className={styles.step3Content}>
-          {/*  El modal que setea isStep2Active, isStep3Active, isStep4Active  */}
-
-          <StepTitle
-            title={'Revisión Final'}
-            subTitle={'Ultimos ajustes'}
-            textKey={
-              'Asegúrate de que todas las transacciones estén clasificadas correctamente. Si es necesario, ajusta la categoría y edita la descripción. Cuando todo esté listo, presiona continuar para exportar tu balance contable.'
-            }
-          />
-          <Table
-            rows={tableDatastep3}
-            columns={columns}
-            disableRowSelectionOnClick
-            hideFooterPagination
-            disableColumnMenu
-            slotProps={{
-              toolbar: {
-                showQuickFilter: true,
-              },
+    <Fade in={true} timeout={500}>
+      <Box className={styles.step3Container}>
+        {isGenerateAiLoading ? (
+          <Box
+            sx={{
+              width: '100%',
+              height: '60vh',
             }}
-            slots={{ toolbar: QuickSearchToolbar }}
-            disableColumnFilter
-            disableColumnSelector
-            disableDensitySelector
-            disableExportButton
-          />
-        </Box>
-      )}
-    </Box>
+          >
+            <LinearProgress />
+          </Box>
+        ) : (
+          <Box className={styles.step3Content}>
+            <StepTitle
+              title={'Revisión Final'}
+              subTitle={'Ultimos ajustes'}
+              textKey={
+                'Asegúrate de que todas las transacciones estén clasificadas correctamente. Si es necesario, ajusta la categoría y edita la descripción. Cuando todo esté listo, presiona continuar para exportar tu balance contable.'
+              }
+            />
+            <Table
+              rows={tableDatastep3}
+              columns={columns}
+              disableRowSelectionOnClick
+              hideFooterPagination
+              disableColumnMenu
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                },
+              }}
+              slots={{ toolbar: QuickSearchToolbar }}
+              disableColumnFilter
+              disableColumnSelector
+              disableDensitySelector
+              disableExportButton
+            />
+          </Box>
+        )}
+      </Box>
+    </Fade>
   )
 }
 

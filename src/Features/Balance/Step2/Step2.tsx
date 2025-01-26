@@ -1,5 +1,5 @@
 import Table from '../../../components/Table/Table'
-import { Box, Button, IconButton } from '@mui/material'
+import { Box, Button, Fade, IconButton } from '@mui/material'
 import { useStyles } from './step2.styles'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -230,32 +230,34 @@ export default function Step2({
   }
 
   return (
-    <Box className={styles.step3Container}>
-      <Box className={styles.step3Content}>
-        {/*  El modal que setea isStep2Active, isStep3Active, isStep4Active  */}
-        <TransactionsModal
-          modalOpen={modalOpen}
-          setModalOpen={setModalOpen}
-          control={control}
-          handleSubmit={handleSubmit}
-        />
-        {stepTitles[currentStep] && (
-          <StepTitle
-            title={'step3_title'}
-            subTitle={stepTitles[currentStep].subTitle}
-            textKey={stepTitles[currentStep].textKey}
-            currentIndex={currentIndex2}
-            totalSteps={activeSteps.length}
+    <Fade in={true} timeout={500} key={currentIndex2}>
+      <Box className={styles.step3Container}>
+        <Box className={styles.step3Content}>
+          {/*  El modal que setea isStep2Active, isStep3Active, isStep4Active  */}
+          <TransactionsModal
+            modalOpen={modalOpen}
+            setModalOpen={setModalOpen}
+            control={control}
+            handleSubmit={handleSubmit}
           />
-        )}
-        <Table
-          rows={rowsToShow}
-          columns={getColumns(currentStep, handleSelectChange)}
-          disableRowSelectionOnClick
-          hideFooterPagination
-          disableColumnMenu
-        />
+          {stepTitles[currentStep] && (
+            <StepTitle
+              title={'step3_title'}
+              subTitle={stepTitles[currentStep].subTitle}
+              textKey={stepTitles[currentStep].textKey}
+              currentIndex={currentIndex2}
+              totalSteps={activeSteps.length}
+            />
+          )}
+          <Table
+            rows={rowsToShow}
+            columns={getColumns(currentStep, handleSelectChange)}
+            disableRowSelectionOnClick
+            hideFooterPagination
+            disableColumnMenu
+          />
+        </Box>
       </Box>
-    </Box>
+    </Fade>
   )
 }

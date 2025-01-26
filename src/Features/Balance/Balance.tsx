@@ -17,6 +17,7 @@ import {
 import Step3 from './Step3/Step3'
 import Step4 from './Step4/Step4'
 import { usePostCSVMutation } from '../../framework/state/services/createCSV'
+import { useNavigate } from 'react-router-dom'
 
 export interface HubSpotUser {
   hubspot_id?: string
@@ -28,6 +29,7 @@ export interface HubSpotUser {
 }
 
 const Balance = () => {
+  const navigate = useNavigate()
   const { classes: styles } = useStyles()
   const [activeStep, setActiveStep] = useState(1)
   //const [step1Status, setStep1Status] = useState(1)
@@ -130,7 +132,9 @@ const Balance = () => {
   return (
     <Box className={styles.balanceContainer}>
       <Box className={styles.headerContainer}>
-        <img src={logoHeader} alt='logo' />
+        <Box onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
+          <img src={logoHeader} alt='logo' />
+        </Box>
       </Box>
       <Stepper
         activeStep={activeStep}
