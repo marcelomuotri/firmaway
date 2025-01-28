@@ -10,6 +10,9 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     display: 'flex',
     gap: 213,
     maxWidth: 860,
+    '@media (max-width: 1200px)': {
+      padding: '30px 20px', // Ajusta según sea necesario
+    },
   },
   leftSide: {
     width: '524px',

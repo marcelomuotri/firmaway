@@ -1,4 +1,4 @@
-import { Box, Fade, LinearProgress, TextField } from '@mui/material'
+import { Box, Fade, LinearProgress, TextField, Typography } from '@mui/material'
 import { useStyles } from './step3.styles'
 import Table from '../../../components/Table/Table'
 import StepTitle from '../../../components/StepTitle'
@@ -13,6 +13,7 @@ const Step3 = ({
   tableDatastep3,
   setTableDataStep3,
 }: any) => {
+  console.log(tags)
   useEffect(() => {
     setTableDataStep3(transactions)
   }, [transactions])
@@ -73,7 +74,7 @@ const Step3 = ({
       renderCell: (params) => (
         <CustomSelectCell
           params={params}
-          options={tags.map((tag) => tag.tag_name)}
+          options={tags.slice(1).map((tag) => tag.tag_name)} // 👈 Excluye el primer tag
           onSelectChange={handleSelectChange}
         />
       ),
@@ -143,7 +144,19 @@ const Step3 = ({
               height: '60vh',
             }}
           >
-            <LinearProgress />
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: '100%',
+                flexDirection: 'column',
+                gap: 8,
+              }}
+            >
+              <Typography>Estamos procesando tu pedido</Typography>
+              <LinearProgress sx={{ width: '50%' }} />
+            </Box>
           </Box>
         ) : (
           <Box className={styles.step3Content}>

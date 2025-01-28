@@ -8,6 +8,10 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    //media query
+    '@media (max-width: 1200px)': {
+      padding: '30px 20px', // Ajusta según sea necesario
+    },
   },
   step3Content: {
     display: 'flex',

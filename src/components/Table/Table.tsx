@@ -90,6 +90,23 @@ export default function SingleClickDataGrid({
             '& .MuiDataGrid-cell:focus-within': {
               outline: 'none !important',
             },
+            '& .MuiDataGrid-iconButtonContainer .MuiSvgIcon-root': {
+              color: 'black !important', // Cambia el color del icono
+            },
+            '& .MuiDataGrid-columnHeaderTitleContainer': {
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            },
+            '& .MuiDataGrid-iconButtonContainer': {
+              visibility: 'visible !important', // Hace que el icono de orden siempre esté visible
+              width: 20,
+            },
+            // '& .MuiDataGrid-sortIcon': {
+            //   opacity: '1 !important', // Hace que el ícono siempre sea visible
+            //   visibility: 'visible !important',
+            //   color: 'red',
+            // },
           }}
           initialState={{
             pagination: {

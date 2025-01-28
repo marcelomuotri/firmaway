@@ -10,6 +10,7 @@ import { Trans, useTranslation } from 'react-i18next'
 import CustomSelectCell from '../../../components/CustomSelectCell'
 import StepTitle from '../../../components/StepTitle'
 import ClipIcon from '../../../assets/Clip'
+import InfoIcon from '../../../assets/Info'
 
 // ------------------ AGRUPADO DE TRANSACCIONES ------------------
 function groupByCounterparty(transactions: any[], stepNumber, tableDataStep2) {

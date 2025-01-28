@@ -6,6 +6,7 @@ import { transactionsApi } from './services/transactionsApi'
 import { tagService } from './services/tagService'
 import { generateAi } from './services/generateAIApi'
 import { createCSVApi } from './services/createCSV'
+import { n8nApi } from './services/testState'
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     [tagService.reducerPath]: tagService.reducer,
     [generateAi.reducerPath]: generateAi.reducer,
     [createCSVApi.reducerPath]: createCSVApi.reducer,
+    [n8nApi.reducerPath]: n8nApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -21,7 +23,8 @@ export const store = configureStore({
       .concat(transactionsApi.middleware)
       .concat(tagService.middleware)
       .concat(generateAi.middleware)
-      .concat(createCSVApi.middleware),
+      .concat(createCSVApi.middleware)
+      .concat(n8nApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
