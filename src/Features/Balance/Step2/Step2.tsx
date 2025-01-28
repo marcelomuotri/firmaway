@@ -9,15 +9,13 @@ import { useGenerateAiMutation } from '../../../framework/state/services/generat
 import { Trans, useTranslation } from 'react-i18next'
 import CustomSelectCell from '../../../components/CustomSelectCell'
 import StepTitle from '../../../components/StepTitle'
-import AttachFileIcon from '@mui/icons-material/AttachFile'
 import ClipIcon from '../../../assets/Clip'
 
 // ------------------ AGRUPADO DE TRANSACCIONES ------------------
-function groupByCounterparty(transactions: any[]) {
+function groupByCounterparty(transactions: any[], stepNumber, tableDataStep2) {
   const grouped = {}
-  transactions.forEach((tx) => {
-    //if (tx.tag_id || tx.kind === 'debitCardTransaction') return
 
+  transactions.forEach((tx) => {
     const {
       counterpartyId,
       counterpartyName,
@@ -25,7 +23,17 @@ function groupByCounterparty(transactions: any[]) {
       referenceUrl,
       kind,
       batchId,
+      tag_id,
     } = tx
+
+    if (stepNumber === 1 && (tag_id || kind === 'debitCardTransaction')) {
+      return
+    }
+
+    // En los demás pasos, excluir las transacciones que tienen `tag_id`
+    if (stepNumber !== 1 && tag_id) {
+      return
+    }
 
     if (!grouped[counterpartyId]) {
       grouped[counterpartyId] = {
@@ -41,17 +49,30 @@ function groupByCounterparty(transactions: any[]) {
       }
     }
 
-    if (kind === 'debitCardTransaction') {
-      grouped[counterpartyId].someDebitCardTransaction = true
-    }
-
     if (amount > 0) {
       grouped[counterpartyId].totalIncome += amount
     } else {
       grouped[counterpartyId].totalExpenses += amount
     }
   })
-  return Object.values(grouped)
+
+  // 🔹 Crear un array con los `counterpartyId` ya categorizados
+  const categorizedAccounts = []
+  tableDataStep2.forEach((row) => {
+    if (row.tag_id) {
+      categorizedAccounts.push(row.id)
+    }
+  })
+
+  // 🔹 Filtrar `grouped` antes de retornarlo
+  const filteredGrouped = []
+  Object.values(grouped).forEach((account) => {
+    if (!categorizedAccounts.includes(account.id)) {
+      filteredGrouped.push(account)
+    }
+  })
+
+  return filteredGrouped
 }
 
 // ------------------ COMPONENTE PRINCIPAL ------------------
@@ -168,11 +189,17 @@ export default function Step2({
    * 4) Carga inicial de transacciones agrupadas
    */
   useEffect(() => {
+    console.log('holis')
     if (transactions && transactions.length > 0) {
-      const grouped = groupByCounterparty(transactions[0]?.data || [])
+      const grouped = groupByCounterparty(
+        transactions[0]?.data || [],
+        currentIndex2 + 1,
+        tableDatastep2
+      )
+      console.log(grouped)
       setTableDataStep2(grouped)
     }
-  }, [transactions])
+  }, [transactions, currentIndex2])
 
   /**
    * 5) Cuando el usuario selecciona una categoría
@@ -206,13 +233,14 @@ export default function Step2({
     }
     if (currentStep === 1) {
       // Excluye si ya tiene tag o si es de tarjeta de débito
-      return !row.tag_id && !row.someDebitCardTransaction
+      return !row.tag_id
     }
 
     // Para los pasos 2, 3, 4 ...
     return !row.tag_id
     //!row.tag_id || row.tag_step === currentStep
   })
+  console.log(rowsToShow)
 
   useEffect(() => {
     if (currentIndex2 === activeSteps.length - 1) {

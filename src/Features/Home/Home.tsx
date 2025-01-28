@@ -107,7 +107,8 @@ const Login = () => {
                 No recomendamos usar Balancito si tu LLC debe pagar impuestos en
                 Estados Unidos. Conoce más{' '}
                 <Link
-                  href='/terms'
+                  target='_blank'
+                  href='https://firmaway.us/que-impuestos-en-estados-unidos-llc/'
                   underline='hover'
                   sx={{
                     fontSize: 12,
