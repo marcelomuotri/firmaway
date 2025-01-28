@@ -40,7 +40,7 @@ const CustomSelectCell = ({
         height: '30px',
       }}
     >
-      <MenuItem value='' disabled sx={{ fontSize: '14px' }}>
+      <MenuItem value='' sx={{ fontSize: '14px' }}>
         {stepCategories.length === 0
           ? 'Sin opciones disponibles'
           : 'Seleccionar'}

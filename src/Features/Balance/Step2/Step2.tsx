@@ -253,7 +253,7 @@ export default function Step2({
             rows={rowsToShow}
             columns={getColumns(currentStep, handleSelectChange)}
             disableRowSelectionOnClick
-            hideFooterPagination
+            //hideFooterPagination
             disableColumnMenu
           />
         </Box>

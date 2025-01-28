@@ -3,32 +3,53 @@ import { Theme } from '@mui/material'
 
 export const useStyles = makeStyles()((theme: Theme) => ({
   homeContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100vh',
+    padding: '25px 48px 44px 52px',
   },
-  homeContent: {
+  bodyContainer: {
+    padding: '45px 90px',
     display: 'flex',
-    flexDirection: 'column',
-    maxWidth: '512px',
-    height: '444px',
-    backgroundColor: 'white',
+    gap: 213,
+    maxWidth: 860,
+  },
+  leftSide: {
+    width: '524px',
   },
   title: {
-    fontWeight: 700,
-    fontSize: 24,
+    fontSize: '24px',
+    fontWeight: '700',
+    color: '#231F20',
     lineHeight: '32px',
-    textAlign: 'center',
-    color: theme.palette.text.primary,
     marginBottom: 8,
   },
-  text: {
-    fontWeight: 400,
-    fontSize: 14,
-    lineHeight: '20px',
-    textAlign: 'center',
-    color: '#131212',
-    marginBottom: '32px',
+  subTitle: {
+    fontSize: '16px',
+    fontWeight: '600',
+    color: '#4B4E51',
+    lineHeight: '18px',
+    marginBottom: 24,
+  },
+  stepsContainer: {
+    display: 'flex',
+    gap: 8,
+  },
+  stepNumber: {
+    fontSize: '16px',
+    fontWeight: '600',
+    color: '#231F20',
+    lineHeight: '18px',
+  },
+  stepText: {
+    fontSize: '12px',
+    fontWeight: '400',
+    color: '#231F20',
+    lineHeight: '16px',
+  },
+  rightSide: {
+    minWidth: 336,
+    maxWidth: 336,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 16,
   },
 }))

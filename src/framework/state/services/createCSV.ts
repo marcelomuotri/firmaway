@@ -4,6 +4,7 @@ export const createCSVApi = createApi({
   reducerPath: 'createCSVApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://ambolt-studio.up.railway.app',
+    responseHandler: async (response) => response.text(),
   }),
   endpoints: (builder) => ({
     postCSV: builder.mutation<any, any>({
@@ -12,6 +13,7 @@ export const createCSVApi = createApi({
         method: 'POST',
         body: payload,
       }),
+      transformResponse: (response) => response,
     }),
   }),
 })

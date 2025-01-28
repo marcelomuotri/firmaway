@@ -129,8 +129,26 @@ const Balance = () => {
         ein: registerValues.ein.replace(/-/g, ''),
         company_name: registerValues.llcName,
       })
-      const data = await postCSV([{ transacciones: tableDatastep3 }])
-      if (data) window.location.href = 'https://www.google.com'
+      const csvData = await postCSV([{ transacciones: tableDatastep3 }])
+
+      // Crea un Blob con el contenido del CSV
+      const blob = new Blob([csvData.data], { type: 'text/csv' })
+
+      // Crea una URL para el archivo
+      const url = URL.createObjectURL(blob)
+
+      // Crea un enlace temporal y lo activa
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'transacciones.csv'
+      document.body.appendChild(a)
+      a.click()
+
+      // Limpieza del DOM
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+
+      if (csvData) window.location.href = 'https://www.google.com'
     } else setActiveStep(activeStep + 1)
   }
 

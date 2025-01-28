@@ -69,6 +69,7 @@ const Step3 = ({
       field: 'tag_name',
       headerName: 'Categoría',
       width: 220,
+      flex: 0.8,
       renderCell: (params) => (
         <CustomSelectCell
           params={params}
@@ -81,6 +82,7 @@ const Step3 = ({
       field: 'description',
       headerName: 'Descripción',
       flex: 1,
+      width: 150,
       editable: true,
       renderCell: (params) => {
         return (
@@ -156,11 +158,17 @@ const Step3 = ({
               rows={tableDatastep3}
               columns={columns}
               disableRowSelectionOnClick
-              hideFooterPagination
+              //hideFooterPagination
+
               disableColumnMenu
               slotProps={{
                 toolbar: {
                   showQuickFilter: true,
+                },
+                pagination: {
+                  labelRowsPerPage: 'Mostrar',
+                  labelDisplayedRows: ({ from, to, count }) =>
+                    `${from}-${to} de ${count !== -1 ? count : `más de ${to}`}`,
                 },
               }}
               slots={{ toolbar: QuickSearchToolbar }}

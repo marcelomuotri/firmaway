@@ -91,6 +91,20 @@ export default function SingleClickDataGrid({
               outline: 'none !important',
             },
           }}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 25,
+              },
+            },
+          }}
+          slotProps={{
+            pagination: {
+              labelRowsPerPage: 'Mostrar',
+              labelDisplayedRows: ({ from, to, count }) =>
+                `${from}-${to} de ${count !== -1 ? count : `más de ${to}`}`,
+            },
+          }}
           //processRowUpdate={handleProcessRowUpdate}
           //editMode='cell'
           {...props} // Deja pasar props extra

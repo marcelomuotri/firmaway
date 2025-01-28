@@ -155,7 +155,7 @@ const Step1 = ({
               control={tokenControl}
               name='year'
               label='Periodo fiscal'
-              options={['2021', '2022', '2023', '2024', '2025'].map((year) => ({
+              options={['2021', '2022', '2023', '2024'].map((year) => ({
                 value: year,
                 label: year,
               }))} // ✅ Años fiscales
