@@ -12,8 +12,7 @@ import StepTitle from '../../../components/StepTitle'
 import ClipIcon from '../../../assets/Clip'
 import InfoIcon from '../../../assets/Info'
 
-// ------------------ AGRUPADO DE TRANSACCIONES ------------------
-function groupByCounterparty(transactions: any[], stepNumber, tableDataStep2) {
+function groupByCounterparty(transactions) {
   const grouped = {}
 
   transactions.forEach((tx) => {
@@ -22,19 +21,12 @@ function groupByCounterparty(transactions: any[], stepNumber, tableDataStep2) {
       counterpartyName,
       amount,
       referenceUrl,
-      kind,
       batchId,
       tag_id,
     } = tx
 
-    if (stepNumber === 1 && (tag_id || kind === 'debitCardTransaction')) {
-      return
-    }
-
-    // En los demás pasos, excluir las transacciones que tienen `tag_id`
-    if (stepNumber !== 1 && tag_id) {
-      return
-    }
+    // ❌ Excluir transacciones que ya tienen un `tag_id`
+    if (tag_id) return
 
     if (!grouped[counterpartyId]) {
       grouped[counterpartyId] = {
@@ -44,11 +36,13 @@ function groupByCounterparty(transactions: any[], stepNumber, tableDataStep2) {
         totalExpenses: 0,
         tag_id: '',
         tag_name: '',
-        tag_step: 0,
         referenceUrl,
         batchId,
+        transactions: [],
       }
     }
+
+    grouped[counterpartyId].transactions.push(tx)
 
     if (amount > 0) {
       grouped[counterpartyId].totalIncome += amount
@@ -57,23 +51,7 @@ function groupByCounterparty(transactions: any[], stepNumber, tableDataStep2) {
     }
   })
 
-  // 🔹 Crear un array con los `counterpartyId` ya categorizados
-  const categorizedAccounts = []
-  tableDataStep2.forEach((row) => {
-    if (row.tag_id) {
-      categorizedAccounts.push(row.id)
-    }
-  })
-
-  // 🔹 Filtrar `grouped` antes de retornarlo
-  const filteredGrouped = []
-  Object.values(grouped).forEach((account) => {
-    if (!categorizedAccounts.includes(account.id)) {
-      filteredGrouped.push(account)
-    }
-  })
-
-  return filteredGrouped
+  return Object.values(grouped)
 }
 
 // ------------------ COMPONENTE PRINCIPAL ------------------
@@ -91,6 +69,7 @@ export default function Step2({
 
   // currentIndex: posición actual dentro del array "activeSteps"
   const [modalOpen, setModalOpen] = useState(true)
+  const [localAccounts, setLocalAccounts] = useState([])
 
   const { handleSubmit, control, watch } = useForm({
     mode: 'onChange',
@@ -190,58 +169,65 @@ export default function Step2({
    * 4) Carga inicial de transacciones agrupadas
    */
   useEffect(() => {
-    console.log('holis')
     if (transactions && transactions.length > 0) {
-      const grouped = groupByCounterparty(
-        transactions[0]?.data || [],
-        currentIndex2 + 1,
-        tableDatastep2
-      )
-      console.log(grouped)
+      const grouped = groupByCounterparty(transactions[0]?.data || [])
       setTableDataStep2(grouped)
     }
-  }, [transactions, currentIndex2])
+  }, [transactions])
 
   /**
    * 5) Cuando el usuario selecciona una categoría
    */
-  const handleSelectChange = useCallback(
-    (rowId, newTagName) => {
-      const selectedCat = tags.find((cat) => cat.tag_name === newTagName)
-      setTableDataStep2((prev) =>
-        prev.map((row) => {
-          if (row.id === rowId) {
-            return {
+  const handleSelectChange = (rowId, newTagName) => {
+    const selectedCat = tags.find((cat) => cat.tag_name === newTagName)
+
+    setTableDataStep2((prev) =>
+      prev.map((row) =>
+        row.id === rowId
+          ? {
               ...row,
               tag_name: newTagName,
               tag_id: selectedCat ? selectedCat.id : '',
-              tag_step: currentStep, // Guardamos el número real de paso
+              tag_step: currentStep, // Guardamos el paso en el que se asignó
             }
-          }
-          return row
-        })
+          : row
       )
-    },
-    [currentStep, tags]
-  )
+    )
+  }
 
   /**
    * 6) Filtramos las filas para mostrar solo las que no tengan tag o sean de este paso
    */
+  // 📌 6️⃣ Filtramos las filas para mostrar solo las que deben verse en este paso
   const rowsToShow = tableDatastep2.filter((row) => {
-    if (row.tag_step === currentStep) {
-      return true
-    }
+    // ✅ Siempre permitir mostrar filas en el paso donde fueron categorizadas
+    if (row.tag_step === currentStep) return true
+
+    // ❌ Si ya tienen `tag_id` y fueron categorizadas en un paso anterior, ocultarlas
+    if (row.tag_id && row.tag_step < currentStep) return false
+
+    // 📌 En el PASO 1, excluir las transacciones `debitCardTransaction`
     if (currentStep === 1) {
-      // Excluye si ya tiene tag o si es de tarjeta de débito
-      return !row.tag_id
+      const validTransactions = row.transactions.filter(
+        (tx) => tx.kind !== 'debitCardTransaction'
+      )
+
+      // ❌ Si después de filtrar no quedan transacciones, excluir la cuenta
+      if (validTransactions.length === 0) return false
+
+      // 🔹 Recalcular ingresos/egresos solo con las transacciones filtradas
+      row.totalIncome = validTransactions.reduce(
+        (sum, tx) => sum + (tx.amount > 0 ? tx.amount : 0),
+        0
+      )
+      row.totalExpenses = validTransactions.reduce(
+        (sum, tx) => sum + (tx.amount < 0 ? tx.amount : 0),
+        0
+      )
     }
 
-    // Para los pasos 2, 3, 4 ...
-    return !row.tag_id
-    //!row.tag_id || row.tag_step === currentStep
+    return true // ✅ Mantener la cuenta si pasa los filtros
   })
-  console.log(rowsToShow)
 
   useEffect(() => {
     if (currentIndex2 === activeSteps.length - 1) {
