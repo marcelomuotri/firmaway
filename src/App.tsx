@@ -7,7 +7,6 @@ import es from '../src/framework/lang/es.json'
 import { Provider } from 'react-redux'
 import { ThemeProvider } from '@mui/material/styles'
 import appTheme from './framework/theme/app-theme'
-import { SupabaseProvider } from './framework/providers/SupabaseProvider'
 import Home from './Features/Home/Home'
 import Layout from './components/Layout'
 import Balance from './Features/Balance/Balance'
@@ -56,13 +55,11 @@ const AppRouter = () => {
 
 const App = () => {
   return (
-    <SupabaseProvider>
-      <Provider store={store}>
-        <ThemeProvider theme={appTheme}>
-          <AppRouter />
-        </ThemeProvider>
-      </Provider>
-    </SupabaseProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={appTheme}>
+        <AppRouter />
+      </ThemeProvider>
+    </Provider>
   )
 }
 
