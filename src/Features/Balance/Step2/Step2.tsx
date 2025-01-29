@@ -69,7 +69,6 @@ export default function Step2({
 
   // currentIndex: posición actual dentro del array "activeSteps"
   const [modalOpen, setModalOpen] = useState(true)
-  const [localAccounts, setLocalAccounts] = useState([])
 
   const { handleSubmit, control, watch } = useForm({
     mode: 'onChange',
@@ -82,14 +81,30 @@ export default function Step2({
 
   // Obtenemos en tiempo real si el user activó el paso 2, 3 o 4
   const { isStep2Active, isStep3Active, isStep4Active } = watch()
+  const [activeSteps, setActiveSteps] = useState<number[]>([1])
 
   /**
    * 1) Generamos el array de pasos activos: [1] + los que el user haya habilitado
    */
-  const activeSteps = [1]
-  if (isStep2Active) activeSteps.push(2)
-  if (isStep3Active) activeSteps.push(3)
-  if (isStep4Active) activeSteps.push(4)
+  // useEffect(() => {
+  //   console.log('holis')
+  //   setActiveSteps((prevSteps) => {
+  //     const updatedSteps = [1] // El paso 1 siempre está presente
+  //     console.log(isStep2Active)
+  //     console.log(isStep3Active)
+  //     if (isStep2Active) updatedSteps.push(2)
+  //     if (isStep3Active) updatedSteps.push(3)
+  //     if (isStep4Active) updatedSteps.push(4)
+
+  //     console.log(updatedSteps)
+  //     // Si el currentIndex2 es mayor que la cantidad de pasos, lo ajustamos
+  //     if (currentIndex2 >= updatedSteps.length) {
+  //       setCurrentIndex2(updatedSteps.length - 1)
+  //     }
+
+  //     return updatedSteps
+  //   })
+  // }, [isStep2Active, isStep3Active, isStep4Active])
 
   // Paso "real" actual => ej: si activeSteps = [1, 3, 4] y currentIndex=1 => currentStep=3
   const currentStep: keyof typeof stepTitles = activeSteps[currentIndex2] || 1
@@ -254,6 +269,8 @@ export default function Step2({
             setModalOpen={setModalOpen}
             control={control}
             handleSubmit={handleSubmit}
+            setActiveSteps={setActiveSteps}
+            setCurrentIndex2={setCurrentIndex2}
           />
           {stepTitles[currentStep] && (
             <StepTitle

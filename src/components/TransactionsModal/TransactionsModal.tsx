@@ -14,6 +14,8 @@ const TransactionsModal = ({
   setModalOpen,
   control,
   handleSubmit,
+  setActiveSteps,
+  setCurrentIndex2,
 }: any) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
@@ -23,7 +25,15 @@ const TransactionsModal = ({
     setModalOpen(false)
   }
 
-  const submitModal = () => {
+  const submitModal = (data) => {
+    const { isStep2Active, isStep3Active, isStep4Active } = data
+    const updatedSteps = [1] // Siempre incluir el paso 1
+
+    if (isStep2Active === 'true') updatedSteps.push(2)
+    if (isStep3Active === 'true') updatedSteps.push(3)
+    if (isStep4Active === 'true') updatedSteps.push(4)
+
+    setActiveSteps(updatedSteps)
     setModalOpen(false)
   }
   return (

@@ -9,6 +9,7 @@ export interface RegisterCompanyPayload {
   phone: string
   ein: string
   company_name: string
+  batchId: string
 }
 
 export const hubspotService = createApi({

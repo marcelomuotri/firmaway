@@ -53,6 +53,7 @@ const Balance = () => {
     postTransactions,
     { data: transactions, isLoading: isLoadingTransactions },
   ] = usePostTransactionsMutation()
+  console.log(transactions)
 
   const [registerCompany, { isLoading: isRegisterLoading }] =
     useRegisterCompanyMutation()
@@ -122,14 +123,18 @@ const Balance = () => {
       generateAi(filteredTransactions)
       setActiveStep(activeStep + 1)
     } else if (activeStep === 4) {
-      registerCompany({
+      const batchId = tableDatastep3[0].batchId
+      const companyResponse = await registerCompany({
         first_name: registerValues.name,
         last_name: registerValues.surname,
         email: registerValues.email,
         phone: registerValues.phone,
         ein: registerValues.ein.replace(/-/g, ''),
         company_name: registerValues.llcName,
+        batchId,
       })
+      console.log(companyResponse)
+      console.log(tableDatastep3)
       const csvData = await postCSV([{ transacciones: tableDatastep3 }])
 
       // Crea un Blob con el contenido del CSV
@@ -149,7 +154,7 @@ const Balance = () => {
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
 
-      if (csvData) window.location.href = 'https://www.google.com'
+      if (csvData) window.location.href = companyResponse.data.redirect_URL
     } else setActiveStep(activeStep + 1)
   }
 
