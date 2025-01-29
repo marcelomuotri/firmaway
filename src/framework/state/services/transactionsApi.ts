@@ -12,10 +12,14 @@ export const transactionsApi = createApi({
   reducerPath: 'transactionsApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://ambolt-studio.up.railway.app',
-    // prepareHeaders: (headers) => {
-    //   headers.set('Content-Type', 'application/json')
-    //   return headers
-    // },
+    prepareHeaders: (headers) => {
+      const credentials = btoa(
+        `${import.meta.env.VITE_N8N_USERNAME}:${import.meta.env.VITE_N8N_PASSWORD}`
+      ) // Codificar en Base64
+
+      headers.set('Authorization', `Basic ${credentials}`)
+      return headers
+    },
   }),
   tagTypes: ['Transactions'], // ✅ Guarda la respuesta en la caché
   endpoints: (builder) => ({

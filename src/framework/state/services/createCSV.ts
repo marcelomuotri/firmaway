@@ -4,6 +4,14 @@ export const createCSVApi = createApi({
   reducerPath: 'createCSVApi',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://ambolt-studio.up.railway.app',
+    prepareHeaders: (headers) => {
+      const credentials = btoa(
+        `${import.meta.env.VITE_N8N_USERNAME}:${import.meta.env.VITE_N8N_PASSWORD}`
+      ) // Codificar en Base64
+
+      headers.set('Authorization', `Basic ${credentials}`)
+      return headers
+    },
     responseHandler: async (response) => response.text(),
   }),
   endpoints: (builder) => ({

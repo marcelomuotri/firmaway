@@ -6,6 +6,13 @@ export const tagService = createApi({
   reducerPath: 'tagService',
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://ambolt-studio.up.railway.app',
+    prepareHeaders: (headers) => {
+      const credentials = btoa(
+        `${import.meta.env.VITE_N8N_USERNAME}:${import.meta.env.VITE_N8N_PASSWORD}`
+      )
+      headers.set('Authorization', `Basic ${credentials}`)
+      return headers
+    },
   }),
   endpoints: (builder) => ({
     // GET: obtiene datos según EIN
