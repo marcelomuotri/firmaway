@@ -142,6 +142,8 @@ const Step3 = ({
             sx={{
               width: '100%',
               height: '60vh',
+              display: 'flex',
+              justifyContent: 'center',
             }}
           >
             <Box
@@ -149,13 +151,43 @@ const Step3 = ({
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '100%',
+                height: '70%',
                 flexDirection: 'column',
-                gap: 8,
+                maxWidth: 436,
               }}
             >
-              <Typography>Estamos procesando tu pedido</Typography>
-              <LinearProgress sx={{ width: '50%' }} />
+              <Typography
+                sx={{
+                  fontSize: 20,
+                  fontWeight: 600,
+                  lineHeight: '26px',
+                  marginBottom: 16,
+                }}
+              >
+                Balancito está haciendo su magia...
+              </Typography>
+              <LinearProgress sx={{ width: '100%', borderRadius: 12 }} />
+              <Typography
+                sx={{
+                  lineHeight: '22px',
+                  marginBottom: 16,
+                  color: '#7C7C7C',
+                  marginTop: 8,
+                }}
+              >
+                Solo tomará unos segundos.
+              </Typography>
+              <Typography
+                sx={{
+                  fontSize: 16,
+                  fontWeight: 500,
+                  lineHeight: '22px',
+                  textAlign: 'center',
+                }}
+              >
+                "La paciencia es la fortaleza del débil y la impaciencia, la
+                debilidad del fuerte." – Immanuel Kant
+              </Typography>
             </Box>
           </Box>
         ) : (

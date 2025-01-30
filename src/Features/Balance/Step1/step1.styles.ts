@@ -44,12 +44,16 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     color: theme.palette.primary.main,
     fontWeight: 600,
     cursor: 'pointer',
+    textDecoration: 'underline',
+    textUnderlineOffset: '2px',
+    textDecorationThickness: '1.2px',
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: 600,
     lineHeight: '26px',
     marginBottom: 16,
+    textAlign: 'center',
   },
   modalSubTitle: {
     lineHeight: '20px',

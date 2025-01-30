@@ -6,7 +6,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     fontSize: 20,
     fontWeight: 600,
     lineHeight: '26px',
-    marginBottom: 16,
+    marginBottom: 24,
     textAlign: 'center',
   },
   modalSubtitle: {

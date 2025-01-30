@@ -51,7 +51,11 @@ const Balance = () => {
 
   const [
     postTransactions,
-    { data: transactions, isLoading: isLoadingTransactions },
+    {
+      data: transactions,
+      isLoading: isLoadingTransactions,
+      error: postTransactionsError,
+    },
   ] = usePostTransactionsMutation()
   console.log(transactions)
 
@@ -159,7 +163,7 @@ const Balance = () => {
   }
 
   const stepperButtonDisabled =
-    (activeStep === 1 && !isStep1Ready) || (activeStep === 4 && !isStep4Ready)
+    activeStep === 1 || (activeStep === 4 && !isStep4Ready)
 
   const isStepperLoading = isRegisterLoading || isCSVLoading
 
@@ -186,6 +190,7 @@ const Balance = () => {
           isLoadingTransactions={isLoadingTransactions}
           setIsStep1Ready={setIsStep1Ready}
           isStep1Ready={isStep1Ready}
+          postTransactionsError={postTransactionsError}
         />
       )}
       {activeStep === 2 && (

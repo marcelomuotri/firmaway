@@ -25,6 +25,7 @@ interface Step1Props {
   isLoadingTransactions: boolean
   setIsStep1Ready: any
   isStep1Ready: boolean
+  postTransactionsError: any
 }
 
 const Step1 = ({
@@ -35,6 +36,7 @@ const Step1 = ({
   isLoadingTransactions,
   setIsStep1Ready,
   isStep1Ready,
+  postTransactionsError,
 }: Step1Props) => {
   const { classes: styles } = useStyles()
   const { t } = useTranslation()
@@ -54,6 +56,8 @@ const Step1 = ({
       setOpenSnackbar(true)
     }
   }
+
+  console.log(postTransactionsError)
 
   const getCopyConnectButton = () => {
     if (isLoadingTransactions) {
@@ -76,7 +80,7 @@ const Step1 = ({
             variant='filled'
             sx={{ width: '100%' }}
           >
-            Token inválido
+            {postTransactionsError?.data?.message}
           </Alert>
         </Snackbar>
 
@@ -104,9 +108,22 @@ const Step1 = ({
             <Typography className={styles.modalTitle}>
               {t('tutorial_title')}
             </Typography>
-            <Typography className={styles.modalSubTitle}>
-              {t('tutorial_subTitle')}
-            </Typography>
+            <Box sx={{ display: 'flex', gap: 6, justifyContent: 'center' }}>
+              <Typography className={styles.modalSubTitle}>
+                {t('tutorial_subTitle')}
+              </Typography>
+              <Link
+                sx={{
+                  marginTop: 2,
+                  color: '#FF6846',
+                  textDecorationColor: '#FF6846',
+                  textUnderlineOffset: '2px',
+                }}
+              >
+                Mercury
+              </Link>
+            </Box>
+
             <iframe
               width='500'
               height='315'

@@ -49,27 +49,29 @@ const Login = () => {
               <Box className={styles.stepsContainer}>
                 <Typography className={styles.stepNumber}>01</Typography>
                 <Typography sx={{ width: 248 }} className={styles.stepText}>
-                  Completa la información de tu empresa. Ten a mano tu EIN.
+                  <strong>Conecta</strong> tu cuenta de Mercury de forma segura
+                  para acceder a todas tus transacciones.
                 </Typography>
               </Box>
               <Box className={styles.stepsContainer}>
                 <Typography className={styles.stepNumber}>02</Typography>
                 <Typography sx={{ width: 268 }} className={styles.stepText}>
-                  Conecta tu cuenta de Mercury para conocer tus transacciones de
-                  manera segura.
+                  <strong>Clasifica</strong> tus cuentas de origen y destino en
+                  categorías para identificarlas fácilmente.
                 </Typography>
               </Box>
               <Box className={styles.stepsContainer}>
                 <Typography className={styles.stepNumber}>03</Typography>
                 <Typography sx={{ width: 248 }} className={styles.stepText}>
-                  Clasifica tus cuentas y transacciones fácilmente en
-                  categorías.
+                  <strong>Revisa</strong> los detalles y <strong>edita</strong>{' '}
+                  lo que necesites para asegurarte de que todo esté perfecto.
                 </Typography>
               </Box>
               <Box className={styles.stepsContainer}>
                 <Typography className={styles.stepNumber}>04</Typography>
                 <Typography sx={{ width: 248 }} className={styles.stepText}>
-                  Descarga tu balance contable organizado y listo para usar.
+                  <strong>Descarga</strong> tu balance contable organizado y
+                  listo para usar.
                 </Typography>
               </Box>
             </Box>

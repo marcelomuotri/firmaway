@@ -11,6 +11,7 @@ import CustomSelectCell from '../../../components/CustomSelectCell'
 import StepTitle from '../../../components/StepTitle'
 import ClipIcon from '../../../assets/Clip'
 import InfoIcon from '../../../assets/Info'
+import QuickSearchToolbar from '../../../components/QuickSearchToolBar'
 
 function groupByCounterparty(transactions) {
   const grouped = {}
@@ -83,30 +84,6 @@ export default function Step2({
   const { isStep2Active, isStep3Active, isStep4Active } = watch()
   const [activeSteps, setActiveSteps] = useState<number[]>([1])
 
-  /**
-   * 1) Generamos el array de pasos activos: [1] + los que el user haya habilitado
-   */
-  // useEffect(() => {
-  //   console.log('holis')
-  //   setActiveSteps((prevSteps) => {
-  //     const updatedSteps = [1] // El paso 1 siempre está presente
-  //     console.log(isStep2Active)
-  //     console.log(isStep3Active)
-  //     if (isStep2Active) updatedSteps.push(2)
-  //     if (isStep3Active) updatedSteps.push(3)
-  //     if (isStep4Active) updatedSteps.push(4)
-
-  //     console.log(updatedSteps)
-  //     // Si el currentIndex2 es mayor que la cantidad de pasos, lo ajustamos
-  //     if (currentIndex2 >= updatedSteps.length) {
-  //       setCurrentIndex2(updatedSteps.length - 1)
-  //     }
-
-  //     return updatedSteps
-  //   })
-  // }, [isStep2Active, isStep3Active, isStep4Active])
-
-  // Paso "real" actual => ej: si activeSteps = [1, 3, 4] y currentIndex=1 => currentStep=3
   const currentStep: keyof typeof stepTitles = activeSteps[currentIndex2] || 1
   /**
    * 2) categoriesByStep: Para cada paso, definimos qué tag(s) queremos mostrar
@@ -287,6 +264,11 @@ export default function Step2({
             disableRowSelectionOnClick
             //hideFooterPagination
             disableColumnMenu
+            slots={{ toolbar: QuickSearchToolbar }}
+            disableColumnFilter
+            disableColumnSelector
+            disableDensitySelector
+            disableExportButton
           />
         </Box>
       </Box>

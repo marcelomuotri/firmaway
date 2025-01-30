@@ -1,5 +1,5 @@
 import { makeStyles } from 'tss-react/mui'
-import { Box, Theme } from '@mui/material'
+import { Box, Theme, Typography } from '@mui/material'
 import { Trans, useTranslation } from 'react-i18next'
 
 const StepContent = ({
@@ -11,22 +11,37 @@ const StepContent = ({
 }: any) => {
   const { t } = useTranslation()
   const { classes: styles } = useStyles()
+  console.log(currentIndex)
+  console.log(textKey)
 
   return (
     <>
-      <p className={styles.step3Title}>{t(title)}</p>
-      <p className={styles.step3SubTitle}>
+      <p className={styles.step3Title}>
         {typeof currentIndex === 'number' ? (
           <>
-            Paso {currentIndex + 1}/{totalSteps}: {t(subTitle)}
+            Paso {currentIndex + 1} de {totalSteps}: {t(subTitle)}
           </>
         ) : (
           t(subTitle)
         )}
       </p>
+      <Typography sx={{ fontSize: 16, marginBottom: 12 }}>
+        Identifica únicamente
+      </Typography>
       <Box sx={{ marginBottom: 24 }}>
         <Trans i18nKey={textKey} components={{ strong: <strong /> }} />
       </Box>
+      {currentIndex === 0 && (
+        <Box sx={{ marginBottom: 24 }}>
+          <Trans
+            i18nKey={'step3_textBis'}
+            components={{ strong: <strong /> }}
+          />
+        </Box>
+      )}
+      <Typography sx={{ fontSize: 16, marginBottom: 16, marginTop: 8 }}>
+        Deja sin clasificar aquellas que no correspondan a estas categorías.
+      </Typography>
     </>
   )
 }
@@ -38,7 +53,8 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     fontSize: '20px',
     fontWeight: 600,
     lineHeight: '24px',
-    marginBottom: 4,
+    marginBottom: 16,
+    marginTop: 0,
   },
   step3SubTitle: {
     color: '#6F757B', // Eliminamos el espacio extra en el color

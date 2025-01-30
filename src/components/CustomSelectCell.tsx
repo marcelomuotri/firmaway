@@ -51,7 +51,7 @@ const CustomSelectCell = ({
           key={option}
           value={option}
         >
-          {option} <span>{getTagIcon(option)}</span>
+          <span>{getTagIcon(option)}</span> {option}
         </MenuItem>
       ))}
     </Select>

@@ -58,9 +58,7 @@ const TransactionsModal = ({
         <Typography className={styles.modalTitle}>
           {t('modal_title')}
         </Typography>
-        <Typography className={styles.modalSubtitle}>
-          {t('modal_toContinueAnswer')}
-        </Typography>
+
         <Box
           sx={{
             display: 'flex',

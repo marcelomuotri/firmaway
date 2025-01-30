@@ -17,6 +17,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     flexDirection: 'column',
     //alignItems: 'center',
     color: theme.palette.text.primary,
+    width: '100%',
     maxWidth: '1200px',
   },
   step3Title: {
