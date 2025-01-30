@@ -211,12 +211,18 @@ const Step1 = ({
             <Info />
             <Typography>
               Al continuar, aceptas los{' '}
-              <Link href='/terms' underline='hover' sx={{ fontWeight: 'bold' }}>
+              <Link
+                href='https://firmaway.us/terms-balancito/'
+                target='_blank'
+                underline='hover'
+                sx={{ fontWeight: 'bold' }}
+              >
                 Términos de servicio
               </Link>{' '}
               y la{' '}
               <Link
-                href='/privacy'
+                href='https://firmaway.us/privacy-balancito/'
+                target='_blank'
                 underline='hover'
                 sx={{ fontWeight: 'bold' }}
               >
