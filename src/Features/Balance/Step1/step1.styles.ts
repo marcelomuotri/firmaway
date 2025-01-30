@@ -9,7 +9,7 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     '@media (max-width: 1200px)': {
-      padding: '30px 20px', // Ajusta según sea necesario
+      padding: '30px 20px',
     },
   },
   step2Content: {

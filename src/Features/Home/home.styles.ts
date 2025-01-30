@@ -3,16 +3,15 @@ import { Theme } from '@mui/material'
 
 export const useStyles = makeStyles()((theme: Theme) => ({
   homeContainer: {
-    padding: '25px 48px 44px 52px',
+    padding: '25px 48px 73px 52px',
+    background: '#F8F8FA',
   },
   bodyContainer: {
-    padding: '45px 90px',
+    width: '100%',
     display: 'flex',
     gap: 213,
     maxWidth: 860,
-    '@media (max-width: 1200px)': {
-      padding: '30px 20px', // Ajusta según sea necesario
-    },
+    background: 'white',
   },
   leftSide: {
     width: '524px',

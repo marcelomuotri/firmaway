@@ -96,6 +96,7 @@ const FInput: React.FC<GenericInputProps> = ({
   rows = 1,
   validationType,
   disabled,
+  defaultValue,
   ...props
 }) => {
   const getValidationRules = (validationType: string) => {
@@ -177,9 +178,10 @@ const FInput: React.FC<GenericInputProps> = ({
               <Select
                 {...field}
                 {...props}
-                displayEmpty
+                //displayEmpty
                 inputProps={{ 'aria-label': 'Without label' }}
                 disabled={disabled}
+                value={field.value || defaultValue} // ✅ Asegura que tenga un valor inicial
               >
                 {options.map((option) => (
                   <MenuItem key={option.value} value={option.value}>

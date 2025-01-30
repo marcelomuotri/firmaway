@@ -39,6 +39,7 @@ const Balance = () => {
   const [isStep1Ready, setIsStep1Ready] = useState(false)
   const [isStep2Ready, setIsStep2Ready] = useState(false)
   const [isStep4Ready, setIsStep4Ready] = useState(false)
+  const [showCongratulations, setShowCongratulations] = useState(false)
   const [currentIndex2, setCurrentIndex2] = useState(0)
   const [tableDatastep2, setTableDataStep2] = useState<any[]>([])
   const [tableDatastep3, setTableDataStep3] = useState<any[]>([])
@@ -57,7 +58,6 @@ const Balance = () => {
       error: postTransactionsError,
     },
   ] = usePostTransactionsMutation()
-  console.log(transactions)
 
   const [registerCompany, { isLoading: isRegisterLoading }] =
     useRegisterCompanyMutation()
@@ -92,7 +92,7 @@ const Balance = () => {
   }, [registerValues, registerErrors])
 
   useEffect(() => {
-    if (tokenValues.token && tokenValues.year) {
+    if (tokenValues.token) {
       setIsButtonTokenDisabled(false)
     } else {
       setIsButtonTokenDisabled(true)
@@ -127,7 +127,7 @@ const Balance = () => {
       generateAi(filteredTransactions)
       setActiveStep(activeStep + 1)
     } else if (activeStep === 4) {
-      const batchId = tableDatastep3[0].batchId
+      const batchId = transactions[0]?.data[0]?.batchId
       const companyResponse = await registerCompany({
         first_name: registerValues.name,
         last_name: registerValues.surname,
@@ -137,8 +137,6 @@ const Balance = () => {
         company_name: registerValues.llcName,
         batchId,
       })
-      console.log(companyResponse)
-      console.log(tableDatastep3)
       const csvData = await postCSV([{ transacciones: tableDatastep3 }])
 
       // Crea un Blob con el contenido del CSV
@@ -158,12 +156,19 @@ const Balance = () => {
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
 
-      if (csvData) window.location.href = companyResponse.data.redirect_URL
+      if (csvData) {
+        setShowCongratulations(true)
+        await new Promise((resolve) => setTimeout(resolve, 3000))
+
+        window.location.href = companyResponse.data.redirect_URL
+      }
     } else setActiveStep(activeStep + 1)
   }
 
   const stepperButtonDisabled =
-    activeStep === 1 || (activeStep === 4 && !isStep4Ready)
+    activeStep === 1 ||
+    (activeStep === 3 && isGenerateAiLoading) ||
+    (activeStep === 4 && !isStep4Ready)
 
   const isStepperLoading = isRegisterLoading || isCSVLoading
 
@@ -218,6 +223,7 @@ const Balance = () => {
         <Step4
           registerControl={registerControl}
           registerErrors={registerErrors}
+          showCongratulations={showCongratulations}
         />
       )}
     </Box>

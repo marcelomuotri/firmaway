@@ -47,7 +47,7 @@ const Step1 = ({
     try {
       const response = await postTransactions({
         api_token: data.token,
-        year: data.year,
+        year: data.year ? data.year : '2024',
       })
       if (response.data) setIsStep1Ready(true)
       else setOpenSnackbar(true)
@@ -56,8 +56,6 @@ const Step1 = ({
       setOpenSnackbar(true)
     }
   }
-
-  console.log(postTransactionsError)
 
   const getCopyConnectButton = () => {
     if (isLoadingTransactions) {
@@ -119,6 +117,8 @@ const Step1 = ({
                   textDecorationColor: '#FF6846',
                   textUnderlineOffset: '2px',
                 }}
+                href='https://app.mercury.com/settings/tokens' // URL a abrir
+                target='_blank' // ✅ Abre en una nueva pestaña
               >
                 Mercury
               </Link>
@@ -176,6 +176,7 @@ const Step1 = ({
                 value: year,
                 label: year,
               }))} // ✅ Años fiscales
+              defaultValue='2024'
             />
           </Box>
 

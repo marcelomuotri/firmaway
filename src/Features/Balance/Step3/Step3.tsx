@@ -13,7 +13,7 @@ const Step3 = ({
   tableDatastep3,
   setTableDataStep3,
 }: any) => {
-  console.log(tags)
+  console.log(transactions)
   useEffect(() => {
     setTableDataStep3(transactions)
   }, [transactions])
@@ -63,7 +63,7 @@ const Step3 = ({
     {
       field: 'amount',
       headerName: 'Monto',
-      valueGetter: (params) => params.toFixed(2),
+      valueGetter: (params) => '$ ' + params.toFixed(2),
       width: 150,
     },
     {
@@ -192,13 +192,40 @@ const Step3 = ({
           </Box>
         ) : (
           <Box className={styles.step3Content}>
-            <StepTitle
-              title={'Revisión Final'}
-              subTitle={'Ultimos ajustes'}
-              textKey={
-                'Asegúrate de que todas las transacciones estén clasificadas correctamente. Si es necesario, ajusta la categoría y edita la descripción. Cuando todo esté listo, presiona continuar para exportar tu balance contable.'
-              }
-            />
+            <Typography
+              sx={{
+                fontSize: 20,
+                fontWeight: 600,
+                lineHeight: '26px',
+                marginBottom: 4,
+              }}
+            >
+              Revisión Final
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: 16,
+                fontWeight: 600,
+                lineHeight: '18px',
+                marginBottom: 16,
+                color: '#6F757B',
+              }}
+            >
+              Últimos ajustes
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: 16,
+                marginBottom: 24,
+                lineHeight: '22px',
+              }}
+            >
+              Revisa y clasifica correctamente todas las transacciones{' '}
+              <strong>({transactions?.length} en total)</strong>. Si es
+              necesario, ajusta la categoría o edita la descripción. Usa la
+              paginación para navegar entre ellas y, cuando todo esté listo,
+              presiona 'Continuar' para exportar tu balance contable.
+            </Typography>
             <Table
               rows={tableDatastep3}
               columns={columns}

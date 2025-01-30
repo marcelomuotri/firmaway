@@ -57,7 +57,7 @@
   "surname_placeholder": "Ingresa tus apellidos",
   "email_placeholder": "Introduce tu correo electrónico",
   "phone_placeholder": "Introduce tu teléfono",
-  "step4_footer": "Solicitamos estos datos únicamente para gestionar tu LLC y verificación de identidad, garantizando su uso exclusivo para estos fines. ",
+  "step4_footer": "Al continuar, confirmas que aceptas recibir comunicaciones por parte de Firmaway.",
   "download": "Descargar",
   "tutorial_title": "Tu API key en 3 simples pasos",
   "tutorial_subTitle": "Te mostramos cómo generarla desde tu cuenta"

@@ -21,14 +21,19 @@ const Login = () => {
   return (
     <Box className={styles.homeContainer}>
       <Box className={styles.headerContainer}>
-        <img src={logo} alt='logobalancito' style={{ width: '123px' }} />
+        <img
+          src={logo}
+          alt='logobalancito'
+          style={{ width: '123px', marginBottom: 25 }}
+        />
       </Box>
       <Box
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          height: '90vh',
+          height: '78vh',
           alignItems: 'center',
+          background: 'white',
         }}
       >
         <Box className={styles.bodyContainer}>

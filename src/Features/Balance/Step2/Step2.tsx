@@ -114,13 +114,13 @@ export default function Step2({
         field: 'totalIncome',
         headerName: 'Ingresos totales',
         width: 150,
-        valueGetter: (params) => params.toFixed(2),
+        valueGetter: (params) => '$ ' + params.toFixed(2),
         flex: 0.7,
       },
       {
         field: 'totalExpenses',
         headerName: 'Egresos totales',
-        valueGetter: (params) => params.toFixed(2),
+        valueGetter: (params) => '$ ' + params.toFixed(2),
         flex: 0.7,
       },
       {
