@@ -72,7 +72,7 @@ const TransactionsModal = ({
               {t('modal_question1')}
             </Typography>
             <Typography className={styles.radioSubTitle}>
-              {t('modal_aclaration1')}
+              {t('modal_aclaration3')}
             </Typography>
             <FInput
               type='radio'
@@ -86,7 +86,7 @@ const TransactionsModal = ({
               {t('modal_question2')}
             </Typography>
             <Typography className={styles.radioSubTitle}>
-              {t('modal_aclaration2')}
+              {t('modal_aclaration1')}
             </Typography>
             <FInput
               type='radio'
@@ -100,7 +100,7 @@ const TransactionsModal = ({
               {t('modal_question3')}
             </Typography>
             <Typography className={styles.radioSubTitle}>
-              {t('modal_aclaration3')}
+              {t('modal_aclaration2')}
             </Typography>
             <FInput
               type='radio'
