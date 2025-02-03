@@ -53,7 +53,7 @@ const Step3 = ({
       field: 'created_at',
       headerName: 'Fecha',
       width: 150,
-      valueGetter: (params) => new Date(params).toLocaleDateString(),
+      valueFormatter: (params) => new Date(params).toLocaleDateString(),
     },
     {
       field: 'counterparty_name',
@@ -63,7 +63,11 @@ const Step3 = ({
     {
       field: 'amount',
       headerName: 'Monto',
-      valueGetter: (params) => '$ ' + params.toFixed(2),
+      valueFormatter: (params) => {
+        // Mantenlo en número internamente y formatea la salida
+        const val = Number(params) || 0
+        return `$ ${val.toFixed(2)}`
+      },
       width: 150,
     },
     {

@@ -9,6 +9,7 @@ import StepTitle from '../../../components/StepTitle'
 import ClipIcon from '../../../assets/Clip'
 import FTooltip from '../../../components/FTooltip'
 import HelpIcon from '@mui/icons-material/Help';
+import BoxOut from '../../../assets/BoxOut'
 
 
 
@@ -113,14 +114,22 @@ export default function Step2({
         field: 'totalIncome',
         headerName: 'Ingresos totales',
         width: 150,
-        valueGetter: (params) => '$ ' + params.toFixed(2),
         flex: 0.7,
+        valueFormatter: (params) => {
+          const val = Number(params) || 0
+          return `$ ${val.toFixed(2)}`
+        }
       },
       {
         field: 'totalExpenses',
         headerName: 'Egresos totales',
-        valueGetter: (params) => '$ ' + params.toFixed(2),
+        //valueGetter: (params) => '$ ' + params?.toFixed(2),
         flex: 0.7,
+        valueFormatter: (params) => {
+          // Mantenlo en número internamente y formatea la salida
+          const val = Number(params) || 0
+          return `$ ${val.toFixed(2)}`
+        }
       },
       {
         field: 'tag_name',
@@ -142,7 +151,7 @@ export default function Step2({
         renderHeader: (params) => (
           <Box display="flex" alignItems="center">
             <Typography sx={{ fontWeight: 'bold' }} >
-              Referencia
+              Ver en mercury
             </Typography>
             <Tooltip title={
               <FTooltip title="Accede al detalle de la transacción en Mercury con un solo clic" />
@@ -182,7 +191,7 @@ export default function Step2({
               rel='noopener noreferrer'
               sx={{ color: '#6F757B' }} // Color gris suave
             >
-              <ClipIcon />
+              <BoxOut />
             </IconButton>
           ) : null,
         flex: 0.7,

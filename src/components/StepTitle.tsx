@@ -17,15 +17,12 @@ const StepContent = ({
       <p className={styles.step3Title}>
         {typeof currentIndex === 'number' ? (
           <>
-            Paso {currentIndex + 1} de {totalSteps}: {t(subTitle)}
+            Paso {currentIndex + 1} de {totalSteps} - <span style={{ fontWeight: "500" }}>{t(subTitle)}:</span>
           </>
         ) : (
           t(subTitle)
         )}
       </p>
-      <Typography sx={{ fontSize: 16, marginBottom: 12 }}>
-        Identifica únicamente
-      </Typography>
       <Box sx={{ marginBottom: 24 }}>
         <Trans i18nKey={textKey} components={{ strong: <strong /> }} />
       </Box>
@@ -49,7 +46,7 @@ export default StepContent
 export const useStyles = makeStyles()((theme: Theme) => ({
   step3Title: {
     fontSize: '20px',
-    fontWeight: 600,
+    fontWeight: 700,
     lineHeight: '24px',
     marginBottom: 16,
     marginTop: 0,
