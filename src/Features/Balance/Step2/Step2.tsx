@@ -1,17 +1,16 @@
 import Table from '../../../components/Table/Table'
-import { Box, Button, Fade, IconButton } from '@mui/material'
+import { Box, Button, Fade, IconButton, Tooltip, tooltipClasses, Typography } from '@mui/material'
 import { useStyles } from './step2.styles'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import TransactionsModal from '../../../components/TransactionsModal/TransactionsModal'
-import { Select, MenuItem } from '@mui/material'
-import { useGenerateAiMutation } from '../../../framework/state/services/generateAIApi'
-import { Trans, useTranslation } from 'react-i18next'
 import CustomSelectCell from '../../../components/CustomSelectCell'
 import StepTitle from '../../../components/StepTitle'
 import ClipIcon from '../../../assets/Clip'
-import InfoIcon from '../../../assets/Info'
-import QuickSearchToolbar from '../../../components/QuickSearchToolBar'
+import FTooltip from '../../../components/FTooltip'
+import HelpIcon from '@mui/icons-material/Help';
+
+
 
 function groupByCounterparty(transactions) {
   const grouped = {}
@@ -140,6 +139,40 @@ export default function Step2({
       {
         field: 'referenceUrl',
         headerName: 'Referencia',
+        renderHeader: (params) => (
+          <Box display="flex" alignItems="center">
+            <Typography sx={{ fontWeight: 'bold' }} >
+              Referencia
+            </Typography>
+            <Tooltip title={
+              <FTooltip title="Accede al detalle de la transacción en Mercury con un solo clic" />
+            }
+              slotProps={{
+                tooltip: {
+                  sx: {
+                    backgroundColor: '#FFFFFF',
+                    color: '#000000',
+                    boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.15)',
+                    fontWeight: 'normal',
+                    padding: '16px',
+                  }
+                }
+              }}
+            >
+              <IconButton
+                component='a'
+                href={params.value}
+                target='_blank'
+                rel='noopener noreferrer'
+                sx={{ color: '#6F757B' }}
+              >
+                <HelpIcon sx={{ width: '15px', height: '15px' }} />
+              </IconButton>
+            </Tooltip>
+          </Box>
+        ),
+        sortable: false,
+        hideSortIcons: true,
         renderCell: (params) =>
           params.value ? (
             <IconButton
@@ -177,11 +210,11 @@ export default function Step2({
       prev.map((row) =>
         row.id === rowId
           ? {
-              ...row,
-              tag_name: newTagName,
-              tag_id: selectedCat ? selectedCat.id : '',
-              tag_step: currentStep, // Guardamos el paso en el que se asignó
-            }
+            ...row,
+            tag_name: newTagName,
+            tag_id: selectedCat ? selectedCat.id : '',
+            tag_step: currentStep, // Guardamos el paso en el que se asignó
+          }
           : row
       )
     )
@@ -261,14 +294,8 @@ export default function Step2({
           <Table
             rows={rowsToShow}
             columns={getColumns(currentStep, handleSelectChange)}
-            disableRowSelectionOnClick
-            //hideFooterPagination
-            disableColumnMenu
-            slots={{ toolbar: QuickSearchToolbar }}
-            disableColumnFilter
-            disableColumnSelector
-            disableDensitySelector
-            disableExportButton
+          //hideFooterPagination
+
           />
         </Box>
       </Box>

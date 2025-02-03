@@ -5,7 +5,11 @@ import {
   GridCellParams,
   GridCellModes,
 } from '@mui/x-data-grid'
-import { Box, Fade } from '@mui/material'
+import { Box, Fade, TextField } from '@mui/material'
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import UnfoldMore from '@mui/icons-material/UnfoldMore'; // Ícono siempre visible
+import QuickSearchToolbar from '../QuickSearchToolBar';
 
 /**
  * Componente reutilizable para DataGrid con edición en un solo click.
@@ -22,6 +26,17 @@ export default function SingleClickDataGrid({
   ...props
 }: any) {
   const [cellModesModel, setCellModesModel] = useState<GridCellModesModel>({})
+  const [categoryFilter, setCategoryFilter] = useState<string>('')
+
+  const handleCategoryChange = (
+    event: React.ChangeEvent<{ value: unknown }>
+  ) => {
+    setCategoryFilter(event.target.value as string)
+  }
+
+  const filteredRows = categoryFilter
+    ? rows.filter((row: any) => row.tag_name === categoryFilter)
+    : rows
 
   // Maneja el click en la celda y la pasa a modo edición si es editable.
   const handleCellClick = useCallback(
@@ -76,7 +91,7 @@ export default function SingleClickDataGrid({
     <Fade in={true} timeout={1500}>
       <Box>
         <DataGrid
-          rows={rows}
+          rows={filteredRows}
           columns={columns}
           cellModesModel={cellModesModel}
           onCellModesModelChange={handleCellModesModelChange}
@@ -91,7 +106,7 @@ export default function SingleClickDataGrid({
               outline: 'none !important',
             },
             '& .MuiDataGrid-iconButtonContainer .MuiSvgIcon-root': {
-              color: 'black !important', // Cambia el color del icono
+              color: 'lightgray !important', // Cambia el color del icono
             },
             '& .MuiDataGrid-columnHeaderTitleContainer': {
               display: 'flex',
@@ -100,19 +115,39 @@ export default function SingleClickDataGrid({
             },
             '& .MuiDataGrid-iconButtonContainer': {
               visibility: 'visible !important', // Hace que el icono de orden siempre esté visible
-              width: 20,
+              width: 28,
             },
-            // '& .MuiDataGrid-sortIcon': {
-            //   opacity: '1 !important', // Hace que el ícono siempre sea visible
-            //   visibility: 'visible !important',
-            //   color: 'red',
-            // },
+            '& .MuiDataGrid-sortIcon': {
+              opacity: '1 !important', // Hace que el ícono siempre sea visible
+            },
+            '& .MuiDataGrid-columnHeader:focus': {
+              outline: "none"
+            },
           }}
           initialState={{
             pagination: {
               paginationModel: {
                 pageSize: 25,
               },
+            },
+          }}
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
+          disableExportButton
+          slots={{
+            toolbar: () => (
+              <QuickSearchToolbar
+                categoryFilter={categoryFilter}
+                onCategoryChange={handleCategoryChange}
+              />
+            ),
+            columnHeaderSortIcon: (props) => {
+              return (<Box display="flex" alignItems="center">
+                {props.direction === 'asc' ? <ExpandMore sx={{ color: "lightgray" }} />
+                  : props.direction === 'desc' ? <ExpandLess sx={{ color: "lightgray" }} />
+                    : <UnfoldMore sx={{ color: "lightgray" }} />}
+              </Box>)
             },
           }}
           slotProps={{
@@ -122,8 +157,13 @@ export default function SingleClickDataGrid({
                 `${from}-${to} de ${count !== -1 ? count : `más de ${to}`}`,
             },
           }}
+
+          // Start of Selection
+          // Removed filterModel as it was not visible
           //processRowUpdate={handleProcessRowUpdate}
           //editMode='cell'
+          disableColumnMenu
+          disableRowSelectionOnClick
           {...props} // Deja pasar props extra
         />
       </Box>

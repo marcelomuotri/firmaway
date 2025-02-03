@@ -13,10 +13,16 @@ import {
   Box,
   Autocomplete,
   FormGroup,
+  Tooltip,
+  IconButton,
 } from '@mui/material'
 import { Controller, Control, FieldError } from 'react-hook-form'
 import { makeStyles } from 'tss-react/mui'
 import { theme } from '../framework/theme/theme'
+import HelpIcon from '@mui/icons-material/Help';
+import FTooltip from './FTooltip'
+import { MuiTelInput } from 'mui-tel-input'
+
 
 interface GenericInputProps {
   name: string
@@ -25,17 +31,17 @@ interface GenericInputProps {
   error?: FieldError
   rules?: any
   type:
-    | 'text'
-    | 'number'
-    | 'date'
-    | 'select'
-    | 'phone'
-    | 'checkbox'
-    | 'radio'
-    | 'password'
-    | 'autocomplete'
-    | 'checkboxGroup'
-    | 'ein' // ✅ Nuevo tipo para EIN
+  | 'text'
+  | 'number'
+  | 'date'
+  | 'select'
+  | 'phone'
+  | 'checkbox'
+  | 'radio'
+  | 'password'
+  | 'autocomplete'
+  | 'checkboxGroup'
+  | 'ein' // ✅ Nuevo tipo para EIN
   placeholder?: string
   options?: { value: string | boolean; label: string }[]
   defaultValue?: any
@@ -46,28 +52,52 @@ interface GenericInputProps {
   sx?: any
   validationType?: 'email' | 'phone' | 'number' | 'text' | 'ein' // ✅ Validación EIN
   disabled?: boolean
+  tooltip?: string
 }
 
 interface InputWithTitleProps {
   label?: string
   children: ReactNode
+  tooltip?: any
 }
 
-const InputWithTitle: React.FC<InputWithTitleProps> = ({ label, children }) => {
+const InputWithTitle: React.FC<InputWithTitleProps> = ({ label, children, tooltip }) => {
   return (
     <Box
       sx={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}
     >
       {label && (
-        <Typography
-          sx={{
-            color: theme.palette.common.black,
-            fontWeight: 400,
-            fontSize: 14,
-          }}
-        >
-          {label}
-        </Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography
+            sx={{
+              color: theme.palette.common.black,
+              fontWeight: 400,
+              fontSize: 14,
+            }}
+          >
+            {label}
+          </Typography>
+          {tooltip && (
+            <Tooltip title={<FTooltip title={tooltip} />}
+              slotProps={{
+                tooltip: {
+                  sx: {
+                    backgroundColor: '#FFFFFF',
+                    color: '#000000',
+                    boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.15)',
+                    fontWeight: 'normal',
+                    padding: '16px',
+                  }
+                }
+              }}>
+              <IconButton
+                sx={{ color: '#6F757B' }}
+              >
+                <HelpIcon sx={{ width: '15px', height: '15px' }} />
+              </IconButton>
+            </Tooltip>
+          )}
+        </Box>
       )}
       {children}
     </Box>
@@ -97,6 +127,7 @@ const FInput: React.FC<GenericInputProps> = ({
   validationType,
   disabled,
   defaultValue,
+  tooltip,
   ...props
 }) => {
   const getValidationRules = (validationType: string) => {
@@ -138,11 +169,10 @@ const FInput: React.FC<GenericInputProps> = ({
     switch (type) {
       case 'text':
       case 'number':
-      case 'phone':
       case 'password':
       case 'ein': // ✅ EIN como un tipo de input especial
         return (
-          <InputWithTitle label={label}>
+          <InputWithTitle label={label} tooltip={tooltip}>
             <TextField
               {...field}
               {...props}
@@ -234,6 +264,46 @@ const FInput: React.FC<GenericInputProps> = ({
                 />
               ))}
             </RadioGroup>
+            {helperText && (
+              <FormHelperText>
+                {error ? error.message : helperText}
+              </FormHelperText>
+            )}
+          </FormControl>
+        )
+      case 'phone':
+        return (
+          <FormControl error={!!error} style={{ width }}>
+            <Typography
+              sx={{
+                color: theme.palette.common.black,
+                fontWeight: 600,
+                fontSize: 14,
+                marginBottom: 1
+              }}
+            >
+              {label}
+            </Typography>
+            <MuiTelInput
+              //onlyCountries={['US', 'MX']}
+              //preferredCountries={['US', 'MX']}
+              {...field}
+              {...props}
+              defaultCountry="US"
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': {
+                    borderColor: error ? '#d32f2f' : '#DFE5E9',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: error ? '#d32f2f' : '#024675',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: error ? '#d32f2f' : '#024675',
+                  },
+                }
+              }}
+            />
             {helperText && (
               <FormHelperText>
                 {error ? error.message : helperText}

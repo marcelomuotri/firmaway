@@ -123,7 +123,6 @@ const Balance = () => {
         }))
       }
       const filteredTransactions = filterTransactions(tableDatastep2)
-      console.log(filteredTransactions)
       generateAi(filteredTransactions)
       setActiveStep(activeStep + 1)
     } else if (activeStep === 4) {

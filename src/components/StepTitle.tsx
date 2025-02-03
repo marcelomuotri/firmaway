@@ -11,8 +11,6 @@ const StepContent = ({
 }: any) => {
   const { t } = useTranslation()
   const { classes: styles } = useStyles()
-  console.log(currentIndex)
-  console.log(textKey)
 
   return (
     <>

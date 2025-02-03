@@ -1,10 +1,11 @@
-import { Box, Fade, LinearProgress, TextField, Typography } from '@mui/material'
+import { Box, CircularProgress, Fade, LinearProgress, TextField, Typography } from '@mui/material'
 import { useStyles } from './step3.styles'
 import Table from '../../../components/Table/Table'
 import StepTitle from '../../../components/StepTitle'
 import { useEffect } from 'react'
 import QuickSearchToolbar from '../../../components/QuickSearchToolBar'
 import CustomSelectCell from '../../../components/CustomSelectCell'
+import Balancito from '../../../assets/balancitoChar.png'
 
 const Step3 = ({
   transactions,
@@ -13,7 +14,6 @@ const Step3 = ({
   tableDatastep3,
   setTableDataStep3,
 }: any) => {
-  console.log(transactions)
   useEffect(() => {
     setTableDataStep3(transactions)
   }, [transactions])
@@ -25,10 +25,10 @@ const Step3 = ({
       prevData.map((row) =>
         row.id === rowId
           ? {
-              ...row,
-              tag_name: newTagName,
-              tag_id: selectedTag ? selectedTag.id : null, // 🔹 Guardamos también el tag_id
-            }
+            ...row,
+            tag_name: newTagName,
+            tag_id: selectedTag ? selectedTag.id : null, // 🔹 Guardamos también el tag_id
+          }
           : row
       )
     )
@@ -144,14 +144,22 @@ const Step3 = ({
               height: '60vh',
               display: 'flex',
               justifyContent: 'center',
+              flexDirection: 'column',
+              alignItems: 'center',
             }}
           >
+            <Box sx={{ display: 'flex', position: 'relative', justifyContent: 'center' }}>
+              <CircularProgress />
+              <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                <img style={{ width: 12, height: 19 }} src={Balancito} alt="Balancito" />
+              </Box>
+            </Box>
             <Box
               sx={{
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '70%',
+                height: '40%',
                 flexDirection: 'column',
                 maxWidth: 436,
               }}
@@ -161,12 +169,11 @@ const Step3 = ({
                   fontSize: 20,
                   fontWeight: 600,
                   lineHeight: '26px',
-                  marginBottom: 16,
                 }}
               >
                 Balancito está haciendo su magia...
               </Typography>
-              <LinearProgress sx={{ width: '100%', borderRadius: 12 }} />
+              {/* <LinearProgress sx={{ width: '100%', borderRadius: 12 }} />  */}
               <Typography
                 sx={{
                   lineHeight: '22px',
@@ -229,25 +236,9 @@ const Step3 = ({
             <Table
               rows={tableDatastep3}
               columns={columns}
-              disableRowSelectionOnClick
-              //hideFooterPagination
+            //hideFooterPagination
 
-              disableColumnMenu
-              slotProps={{
-                toolbar: {
-                  showQuickFilter: true,
-                },
-                pagination: {
-                  labelRowsPerPage: 'Mostrar',
-                  labelDisplayedRows: ({ from, to, count }) =>
-                    `${from}-${to} de ${count !== -1 ? count : `más de ${to}`}`,
-                },
-              }}
-              slots={{ toolbar: QuickSearchToolbar }}
-              disableColumnFilter
-              disableColumnSelector
-              disableDensitySelector
-              disableExportButton
+
             />
           </Box>
         )}

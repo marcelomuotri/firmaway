@@ -3,6 +3,7 @@ import { useStyles } from './step4.styles'
 import { useTranslation } from 'react-i18next'
 import FInput from '../../../components/FInput'
 import Info from '../../../assets/Info'
+import FTooltip from '../../../components/FTooltip'
 
 interface Step1Props {
   registerControl: any
@@ -62,6 +63,7 @@ const Step4 = ({
                     name='ein'
                     label={t('EIN')}
                     placeholder={t('ein_placeholder')}
+                    tooltip="El número de identificación del empleador o EIN se usa para identificar a una entidad comercial."
                   />
                   <FInput
                     type='text'
@@ -87,7 +89,7 @@ const Step4 = ({
                     placeholder={t('email_placeholder')}
                   />
                   <FInput
-                    type='text'
+                    type='phone'
                     control={registerControl}
                     name='phone'
                     label={t('phone')}

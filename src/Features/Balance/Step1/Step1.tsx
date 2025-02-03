@@ -52,7 +52,6 @@ const Step1 = ({
       if (response.data) setIsStep1Ready(true)
       else setOpenSnackbar(true)
     } catch (error) {
-      console.log(error)
       setOpenSnackbar(true)
     }
   }
@@ -185,7 +184,7 @@ const Step1 = ({
               title='Conexion exitosa'
               fullWidth
               endIcon={<Tick />}
-              onClick={() => {}}
+              onClick={() => { }}
               sx={{ backgroundColor: '#5EA17B', color: 'white' }}
             />
           ) : (
