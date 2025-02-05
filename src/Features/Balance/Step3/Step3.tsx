@@ -77,8 +77,9 @@ const Step3 = ({
       flex: 0.8,
       renderCell: (params) => (
         <CustomSelectCell
+          // Start of Selection
           params={params}
-          options={tags.slice(1).map((tag) => tag.tag_name)} // 👈 Excluye el primer tag
+          options={tags.filter(tag => tag.id !== 1).map(tag => tag.tag_name)} // 👈 Excluye el tag con id=1
           onSelectChange={handleSelectChange}
         />
       ),
