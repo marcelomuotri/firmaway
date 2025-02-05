@@ -18,6 +18,7 @@ import Step3 from './Step3/Step3'
 import Step4 from './Step4/Step4'
 import { usePostCSVMutation } from '../../framework/state/services/createCSV'
 import { useNavigate } from 'react-router-dom'
+import { useCheckStatusQuery, useStartProcessMutation } from '../../framework/state/services/generateAIv2'
 
 export interface HubSpotUser {
   hubspot_id?: string
@@ -67,8 +68,29 @@ const Balance = () => {
     { data: transactionsWithDesciption, isLoading: isGenerateAiLoading },
   ] = usePostGenerateAiMutation()
 
+  const [batchId, setBatchId] = useState("");
+  const [stopPolling, setStopPolling] = useState(false);
+  const [loadingStep3, setLoadingStep3] = useState(true);
+
+  const [startProcess, { isLoading: isProcessLoading }] = useStartProcessMutation()
+  const { data: statusData, isFetching: isChecking } = useCheckStatusQuery(batchId, {
+    skip: !batchId || activeStep !== 3,
+    pollingInterval: stopPolling ? 0 : 10000, // reintenta cada 10s si no hemos parado
+
+  });
+
+
+  useEffect(() => {
+    setBatchId(transactions?.[0]?.data?.[0]?.batchId)
+  }, [transactions])
+
+
   const [postCSV, { data: csvData, isLoading: isCSVLoading }] =
     usePostCSVMutation()
+
+  useEffect(() => {
+    console.log(statusData)
+  }, [statusData])
 
   const {
     watchRegister,
@@ -109,11 +131,19 @@ const Balance = () => {
     }
   }, [isStep1Ready])
 
+
+  useEffect(() => {
+    console.log(statusData)
+    if (statusData?.status === "done") {
+      setStopPolling(true)
+      setLoadingStep3(false)
+    }
+  }, [statusData])
+
   const onNextStep = async () => {
     if (activeStep === 2 && !isStep2Ready) {
       setCurrentIndex2(currentIndex2 + 1)
     } else if (activeStep === 2 && isStep2Ready) {
-      //generat
       function filterTransactions(transactions) {
         return transactions.map(({ id, tag_id, tag_name, batchId }) => ({
           id,
@@ -123,7 +153,10 @@ const Balance = () => {
         }))
       }
       const filteredTransactions = filterTransactions(tableDatastep2)
-      generateAi(filteredTransactions)
+      startProcess(filteredTransactions)
+      if (statusData?.status === "done") {
+        setStopPolling(true)
+      }
       setActiveStep(activeStep + 1)
     } else if (activeStep === 4) {
       const batchId = transactions[0]?.data[0]?.batchId
@@ -211,8 +244,8 @@ const Balance = () => {
       )}
       {activeStep === 3 && (
         <Step3
-          transactions={transactionsWithDesciption}
-          isGenerateAiLoading={isGenerateAiLoading}
+          transactions={statusData?.transacciones}
+          isGenerateAiLoading={loadingStep3}
           tags={tags}
           tableDatastep3={tableDatastep3}
           setTableDataStep3={setTableDataStep3}
