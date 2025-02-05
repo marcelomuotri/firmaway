@@ -187,7 +187,7 @@ const Step3 = ({
                   marginTop: 8,
                 }}
               >
-                Solo tomará unos segundos.
+                Podría demorar hasta 5 minutos.
               </Typography>
               <Typography
                 sx={{
