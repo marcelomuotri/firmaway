@@ -34,7 +34,7 @@ const MobileComponent = () => {
                     <Typography className={styles.title}>Oops... Balancito es solo para computadoras</Typography>
                     <Typography className={styles.subtitle}>Por ahora, Balancito solo funciona en computadoras. Déjanos tu correo y te enviamos el enlace directo para que accedas desde tu PC o laptop.</Typography>
                     <TextField label="" fullWidth className={styles.textField} placeholder='Correo electrónico' onChange={(e) => setEmail(e.target.value)} />
-                    <FButton title='Enviar enlace' onClick={handleSendLink} fullWidth startIcon={<RightChevron />} />
+                    <FButton title='Enviar enlace' onClick={handleSendLink} fullWidth startIcon={<RightChevron />} loading={isLoading} />
                     {error && <Typography className={styles.error}>{error}</Typography>}
                 </Box>
             ) : (
