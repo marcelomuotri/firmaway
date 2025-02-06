@@ -41,6 +41,7 @@ const MobileComponent = () => {
                 <Box>
                     <Typography className={styles.title}>✅ ¡Listo! Enlace enviado.</Typography>
                     <Typography className={styles.subtitle}>Revisa tu bandeja de entrada (y spam, por si acaso). Te enviamos un enlace para que accedas a Balancito desde tu computadora.</Typography>
+                    <Typography className={styles.subtitle}> 🔎 ¿No llegó el correo? Espera unos minutos o intenta nuevamente.</Typography>
                 </Box>
             )}
         </Box>
@@ -67,12 +68,14 @@ export const useStyles = makeStyles()((theme: Theme) => ({
         fontWeight: 600,
         lineHeight: '26px',
         marginBottom: 8,
+        textAlign: 'center',
     },
     subtitle: {
         fontSize: '16px',
         fontWeight: 400,
         lineHeight: '22px',
         marginBottom: 32,
+        textAlign: 'center',
     },
     textField: {
         marginBottom: 8,
