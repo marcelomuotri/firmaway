@@ -8,6 +8,7 @@ import { generateAi } from './services/generateAIApi'
 import { createCSVApi } from './services/createCSV'
 import { n8nApi } from './services/testState'
 import { generateAIv2 } from './services/generateAIv2'
+import { emailApi } from './services/emailService'
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     [createCSVApi.reducerPath]: createCSVApi.reducer,
     [n8nApi.reducerPath]: n8nApi.reducer,
     [generateAIv2.reducerPath]: generateAIv2.reducer,
+    [emailApi.reducerPath]: emailApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware()
@@ -27,7 +29,8 @@ export const store = configureStore({
       .concat(generateAi.middleware)
       .concat(createCSVApi.middleware)
       .concat(n8nApi.middleware)
-      .concat(generateAIv2.middleware),
+      .concat(generateAIv2.middleware)
+      .concat(emailApi.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>
