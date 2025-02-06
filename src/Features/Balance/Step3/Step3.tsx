@@ -18,6 +18,8 @@ const Step3 = ({
     setTableDataStep3(transactions)
   }, [transactions])
 
+  console.log(transactions)
+
   const handleSelectChange = (rowId, newTagName) => {
     const selectedTag = tags.find((tag) => tag.tag_name === newTagName)
 
