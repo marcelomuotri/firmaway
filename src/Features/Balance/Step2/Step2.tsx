@@ -1,5 +1,13 @@
 import Table from '../../../components/Table/Table'
-import { Box, Button, Fade, IconButton, Tooltip, tooltipClasses, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Fade,
+  IconButton,
+  Tooltip,
+  tooltipClasses,
+  Typography,
+} from '@mui/material'
 import { useStyles } from './step2.styles'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -8,10 +16,8 @@ import CustomSelectCell from '../../../components/CustomSelectCell'
 import StepTitle from '../../../components/StepTitle'
 import ClipIcon from '../../../assets/Clip'
 import FTooltip from '../../../components/FTooltip'
-import HelpIcon from '@mui/icons-material/Help';
+import HelpIcon from '@mui/icons-material/Help'
 import BoxOut from '../../../assets/BoxOut'
-
-
 
 function groupByCounterparty(transactions) {
   const grouped = {}
@@ -62,7 +68,6 @@ export default function Step2({
   currentIndex2,
   setCurrentIndex2,
   setIsStep2Ready,
-  generateAi,
   tableDatastep2,
   setTableDataStep2,
 }: any) {
@@ -118,7 +123,7 @@ export default function Step2({
         valueFormatter: (params) => {
           const val = Number(params) || 0
           return `$ ${val.toFixed(2)}`
-        }
+        },
       },
       {
         field: 'totalExpenses',
@@ -129,7 +134,7 @@ export default function Step2({
           // Mantenlo en número internamente y formatea la salida
           const val = Number(params) || 0
           return `$ ${val.toFixed(2)}`
-        }
+        },
       },
       {
         field: 'tag_name',
@@ -149,13 +154,12 @@ export default function Step2({
         field: 'referenceUrl',
         headerName: 'Referencia',
         renderHeader: (params) => (
-          <Box display="flex" alignItems="center">
-            <Typography sx={{ fontWeight: 'bold' }} >
-              Ver en mercury
-            </Typography>
-            <Tooltip title={
-              <FTooltip title="Accede al detalle de la transacción en Mercury con un solo clic" />
-            }
+          <Box display='flex' alignItems='center'>
+            <Typography sx={{ fontWeight: 'bold' }}>Ver en mercury</Typography>
+            <Tooltip
+              title={
+                <FTooltip title='Accede al detalle de la transacción en Mercury con un solo clic' />
+              }
               slotProps={{
                 tooltip: {
                   sx: {
@@ -164,8 +168,8 @@ export default function Step2({
                     boxShadow: '0px 2px 8px rgba(0, 0, 0, 0.15)',
                     fontWeight: 'normal',
                     padding: '16px',
-                  }
-                }
+                  },
+                },
               }}
             >
               <IconButton
@@ -219,11 +223,11 @@ export default function Step2({
       prev.map((row) =>
         row.id === rowId
           ? {
-            ...row,
-            tag_name: newTagName,
-            tag_id: selectedCat ? selectedCat.id : '',
-            tag_step: currentStep, // Guardamos el paso en el que se asignó
-          }
+              ...row,
+              tag_name: newTagName,
+              tag_id: selectedCat ? selectedCat.id : '',
+              tag_step: currentStep, // Guardamos el paso en el que se asignó
+            }
           : row
       )
     )
@@ -303,8 +307,7 @@ export default function Step2({
           <Table
             rows={rowsToShow}
             columns={getColumns(currentStep, handleSelectChange)}
-          //hideFooterPagination
-
+            //hideFooterPagination
           />
         </Box>
       </Box>
