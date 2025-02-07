@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 
 export interface Transaction {
   id: string
@@ -8,20 +8,26 @@ export interface Transaction {
   category: string
 }
 
+// 1) Creamos nuestra baseQuery normal:
+const rawBaseQuery = fetchBaseQuery({
+  baseUrl: 'https://ambolt-studio.up.railway.app',
+  prepareHeaders: (headers) => {
+    const credentials = btoa(
+      `${import.meta.env.VITE_N8N_USERNAME}:${import.meta.env.VITE_N8N_PASSWORD}`
+    )
+    headers.set('Authorization', `Basic ${credentials}`)
+    return headers
+  },
+})
+
+// 2) Envolvemos el baseQuery dentro de retry para habilitar reintentos:
+const baseQueryWithRetry = retry(rawBaseQuery, { maxRetries: 3 })
+
 export const transactionsApi = createApi({
   reducerPath: 'transactionsApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://ambolt-studio.up.railway.app',
-    prepareHeaders: (headers) => {
-      const credentials = btoa(
-        `${import.meta.env.VITE_N8N_USERNAME}:${import.meta.env.VITE_N8N_PASSWORD}`
-      ) // Codificar en Base64
-
-      headers.set('Authorization', `Basic ${credentials}`)
-      return headers
-    },
-  }),
-  tagTypes: ['Transactions'], // ✅ Guarda la respuesta en la caché
+  // 3) Usamos baseQueryWithRetry en lugar del baseQuery normal
+  baseQuery: baseQueryWithRetry,
+  tagTypes: ['Transactions'],
   endpoints: (builder) => ({
     postTransactions: builder.mutation<
       Transaction[],
@@ -30,10 +36,10 @@ export const transactionsApi = createApi({
       query: ({ api_token, year }) => ({
         url: '/webhook/46c08951-f33c-402e-811f-e7bad609f26d',
         method: 'POST',
-        body: { api_token, year }, // ✅ Remueve el guion del EIN antes de enviarlo
+        body: { api_token, year },
       }),
-      transformResponse: (response: Transaction[]) => response, // ✅ Guarda la respuesta en caché
-      providesTags: ['Transactions'], // ✅ Permite recuperar los datos sin hacer otra petición
+      transformResponse: (response: Transaction[]) => response,
+      providesTags: ['Transactions'],
     }),
   }),
 })
