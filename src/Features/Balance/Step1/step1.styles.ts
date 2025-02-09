@@ -8,6 +8,8 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    marginBottom: 24,
+    flex: 1,
     '@media (max-width: 1200px)': {
       padding: '30px 20px',
     },

@@ -150,7 +150,7 @@ const Step3 = ({
           <Box
             sx={{
               width: '100%',
-              height: '60vh',
+              height: '65vh',
               display: 'flex',
               justifyContent: 'center',
               flexDirection: 'column',
@@ -182,7 +182,6 @@ const Step3 = ({
               >
                 Balancito está haciendo su magia...
               </Typography>
-              {/* <LinearProgress sx={{ width: '100%', borderRadius: 12 }} />  */}
               <Typography
                 sx={{
                   lineHeight: '22px',

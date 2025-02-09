@@ -6,6 +6,9 @@ export const useStyles = makeStyles()((theme: Theme) => ({
     paddingLeft: '52px',
     paddingRight: '48px',
     paddingTop: '25px',
+    display: 'flex',
+    flexDirection: 'column',
+    flex: 1,
   },
   headerContainer: {
     marginBottom: '21px',

@@ -43,6 +43,7 @@ const Login = () => {
               height: '78vh',
               alignItems: 'center',
               background: 'white',
+              flex: 1,
             }}
           >
             <Box className={styles.bodyContainer}>
