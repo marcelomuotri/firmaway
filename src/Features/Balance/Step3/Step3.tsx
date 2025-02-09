@@ -141,6 +141,8 @@ const Step3 = ({
     },
   ]
   const { classes: styles } = useStyles()
+  const filterOptions = tags.filter(tag => tag.id !== 1).map(tag => tag.tag_name)
+  console.log(filterOptions)
   return (
     <Fade in={true} timeout={500}>
       <Box className={styles.step3Container}>
@@ -243,9 +245,7 @@ const Step3 = ({
             <Table
               rows={tableDatastep3}
               columns={columns}
-            //hideFooterPagination
-
-
+              options={filterOptions}
             />
           </Box>
         )}

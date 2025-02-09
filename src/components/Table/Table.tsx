@@ -19,18 +19,27 @@ import QuickSearchToolbar from '../QuickSearchToolBar';
  * - columns: array con tus columnas
  * - ...props: cualquier otra prop que quieras pasar al DataGrid (ej: disableRowSelectionOnClick, etc.)
  */
+
+interface SingleClickDataGridProps {
+  rows: any[]
+  columns: any[]
+  handleProcessRowUpdate?: (newRow: any, oldRow: any) => any
+  options: string[]
+}
 export default function SingleClickDataGrid({
   rows,
   columns,
   handleProcessRowUpdate,
+  options,
   ...props
-}: any) {
+}: SingleClickDataGridProps) {
   const [cellModesModel, setCellModesModel] = useState<GridCellModesModel>({})
   const [categoryFilter, setCategoryFilter] = useState<string>('')
 
   const handleCategoryChange = (
-    event: React.ChangeEvent<{ value: unknown }>
+    event: any
   ) => {
+    console.log(event.target)
     setCategoryFilter(event.target.value as string)
   }
 
@@ -140,6 +149,7 @@ export default function SingleClickDataGrid({
               <QuickSearchToolbar
                 categoryFilter={categoryFilter}
                 onCategoryChange={handleCategoryChange}
+                categories={options}
               />
             ),
             columnHeaderSortIcon: (props) => {
@@ -149,6 +159,16 @@ export default function SingleClickDataGrid({
                     : <UnfoldMore sx={{ color: "lightgray" }} />}
               </Box>)
             },
+            noRowsOverlay: () => (
+              <Box sx={{ padding: 20, textAlign: 'center' }}>
+                No hay filas disponibles.
+              </Box>
+            ),
+            noResultsOverlay: () => (
+              <Box sx={{ padding: 20, textAlign: 'center' }}>
+                No hay filas disponibles.
+              </Box>
+            ),
           }}
           slotProps={{
             pagination: {
@@ -156,6 +176,7 @@ export default function SingleClickDataGrid({
               labelDisplayedRows: ({ from, to, count }) =>
                 `${from}-${to} de ${count !== -1 ? count : `más de ${to}`}`,
             },
+            // Start Generation Here
           }}
 
           // Start of Selection

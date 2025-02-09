@@ -223,11 +223,11 @@ export default function Step2({
       prev.map((row) =>
         row.id === rowId
           ? {
-              ...row,
-              tag_name: newTagName,
-              tag_id: selectedCat ? selectedCat.id : '',
-              tag_step: currentStep, // Guardamos el paso en el que se asignó
-            }
+            ...row,
+            tag_name: newTagName,
+            tag_id: selectedCat ? selectedCat.id : '',
+            tag_step: currentStep, // Guardamos el paso en el que se asignó
+          }
           : row
       )
     )
@@ -282,6 +282,8 @@ export default function Step2({
     4: { subTitle: 'step3_subTitle4', textKey: 'step3_text4' },
   }
 
+  const filterOptions = categoriesByStep[currentIndex2 + 1]
+
   return (
     <Fade in={true} timeout={500} key={currentIndex2}>
       <Box className={styles.step3Container}>
@@ -307,7 +309,8 @@ export default function Step2({
           <Table
             rows={rowsToShow}
             columns={getColumns(currentStep, handleSelectChange)}
-            //hideFooterPagination
+            options={filterOptions}
+          //hideFooterPagination
           />
         </Box>
       </Box>

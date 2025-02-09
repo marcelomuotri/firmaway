@@ -1,15 +1,18 @@
 import { Box, FormControl, IconButton, InputAdornment, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { GridToolbarQuickFilter } from '@mui/x-data-grid'
 import SearchIcon from '@mui/icons-material/Search'
+import { getTagIcon } from './CustomSelectCell'
 
 interface QuickSearchToolbarProps {
   categoryFilter: string
   onCategoryChange: (event: SelectChangeEvent<string>) => void
+  categories: string[]
 }
 
 const QuickSearchToolbar: React.FC<QuickSearchToolbarProps> = ({
   categoryFilter,
   onCategoryChange,
+  categories,
 }) => {
 
   return (
@@ -48,27 +51,33 @@ const QuickSearchToolbar: React.FC<QuickSearchToolbarProps> = ({
           '& .MuiInput-underline:after': { borderBottom: 'none' },
         }}
       />
-      {/* <FormControl sx={{ minWidth: 200 }}>
-        <InputLabel id="category-select-label">Categoría</InputLabel>
+      <FormControl sx={{ minWidth: 280, marginLeft: 20, border: '1px solid #EBEDEE', borderRadius: "24px!important", maxHeight: "49px" }}>
         <Select
           labelId="category-select-label"
           id="category-select"
           value={categoryFilter}
-          label="Categoría"
           onChange={onCategoryChange}
-
+          displayEmpty
+          sx={{
+            maxHeight: "49px",
+            borderRadius: "24px!important",
+            paddingLeft: "8px!important",
+          }}
         >
-          <MenuItem value="">
-            <em>Todas</em>
+          <MenuItem value="" >
+            Todas
           </MenuItem>
-          <MenuItem value="Cuentas de propietarios">Cuentas de propietarios</MenuItem>
-          <MenuItem value="categoria2">Categoría 2</MenuItem>
-          <MenuItem value="categoria3">Categoría 3</MenuItem>
+          {categories.map((category: string) => (
+            <MenuItem key={category} value={category}>
+              {getTagIcon(category) + ' ' + category}
+            </MenuItem>
+          ))}
         </Select>
-      </FormControl> */}
-
+      </FormControl>
     </Box>
   )
 }
 
 export default QuickSearchToolbar
+
+

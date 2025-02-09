@@ -60,7 +60,7 @@ const CustomSelectCell = ({
 
 export default CustomSelectCell
 
-const getTagIcon = (tagName: string) => {
+export const getTagIcon = (tagName: string) => {
   const icons: { [key: string]: string } = {
     'Cuentas de propietarios': '👤',
     'Cuentas de la misma empresa': '🏢',
