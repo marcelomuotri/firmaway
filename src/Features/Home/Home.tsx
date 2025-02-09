@@ -3,7 +3,7 @@ import { Box, Link, Typography, useMediaQuery, useTheme } from '@mui/material'
 import logo from '../../assets/Logo Header.png'
 import FButton from '../../components/FButton/FButton'
 import { useNavigate } from 'react-router-dom'
-import Balancito from '../../assets/balancitoChar.png'
+import Balancito from '../../assets/logoTalking.png'
 import RightChevron from '../../assets/RightChevron.tsx'
 import Info from '../../assets/Info.tsx'
 import Warning from '../../assets/Warning.tsx'
@@ -92,18 +92,8 @@ const Login = () => {
                 </Box>
               </Box>
               <Box className={styles.rightSide}>
-                <img src={Balancito} alt='balancitoChart' style={{ width: 54 }} />
-                <Typography
-                  sx={{
-                    textAlign: 'center',
-                    fontSize: 16,
-                    lineHeight: '22px',
-                    color: '#232E39',
-                  }}
-                >
-                  Soy tu asistente inteligente para preparar el Balance Contable de
-                  tu LLC.
-                </Typography>
+                <img src={Balancito} alt='balancitoChart' style={{ width: 270 }} />
+
                 <Box sx={{ paddingTop: 16, width: '100%' }}>
                   <FButton
                     onClick={onClickStart}
