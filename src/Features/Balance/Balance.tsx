@@ -199,7 +199,7 @@ const Balance = () => {
 
   const stepperButtonDisabled =
     activeStep === 1 ||
-    (activeStep === 3 && isGenerateAiLoading) ||
+    (activeStep === 3 && loadingStep3) ||
     (activeStep === 4 && !isStep4Ready)
 
   const isStepperLoading = isRegisterLoading || isCSVLoading
@@ -245,7 +245,7 @@ const Balance = () => {
       {activeStep === 3 && (
         <Step3
           transactions={statusData?.transacciones}
-          isGenerateAiLoading={loadingStep3}
+          loadingStep3={loadingStep3}
           tags={tags}
           tableDatastep3={tableDatastep3}
           setTableDataStep3={setTableDataStep3}

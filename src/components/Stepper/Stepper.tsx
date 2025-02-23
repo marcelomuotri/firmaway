@@ -42,9 +42,8 @@ const Stepper = ({
               className={`${styles.step} ${isActiveOrCompleted ? styles.active : ''}`}
             >
               <Box
-                className={`${styles.stepConnector} ${
-                  isActiveOrCompleted ? styles.activeConnector : ''
-                }`}
+                className={`${styles.stepConnector} ${isActiveOrCompleted ? styles.activeConnector : ''
+                  }`}
               />
               <Typography className={styles.stepText}>{step.label}</Typography>
             </Box>

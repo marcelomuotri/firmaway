@@ -1,15 +1,13 @@
-import { Box, CircularProgress, Fade, LinearProgress, TextField, Typography } from '@mui/material'
+import { Box, CircularProgress, Fade, TextField, Typography } from '@mui/material'
 import { useStyles } from './step3.styles'
 import Table from '../../../components/Table/Table'
-import StepTitle from '../../../components/StepTitle'
 import { useEffect } from 'react'
-import QuickSearchToolbar from '../../../components/QuickSearchToolBar'
 import CustomSelectCell from '../../../components/CustomSelectCell'
 import Balancito from '../../../assets/balancitoChar.png'
 
 const Step3 = ({
   transactions,
-  isGenerateAiLoading,
+  loadingStep3,
   tags,
   tableDatastep3,
   setTableDataStep3,
@@ -18,7 +16,6 @@ const Step3 = ({
     setTableDataStep3(transactions)
   }, [transactions])
 
-  console.log(transactions)
 
   const handleSelectChange = (rowId, newTagName) => {
     const selectedTag = tags.find((tag) => tag.tag_name === newTagName)
@@ -144,7 +141,7 @@ const Step3 = ({
   return (
     <Fade in={true} timeout={500}>
       <Box className={styles.step3Container}>
-        {isGenerateAiLoading ? (
+        {loadingStep3 ? (
           <Box
             sx={{
               width: '100%',
