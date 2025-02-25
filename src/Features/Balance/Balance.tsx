@@ -1,4 +1,4 @@
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { useStyles } from './balance.styles'
 import logoHeader from '../../assets/Logo Header.png'
 import Stepper from '../../components/Stepper/Stepper'
@@ -19,6 +19,8 @@ import Step4 from './Step4/Step4'
 import { usePostCSVMutation } from '../../framework/state/services/createCSV'
 import { useNavigate } from 'react-router-dom'
 import { useCheckStatusQuery, useStartProcessMutation } from '../../framework/state/services/generateAIv2'
+import WhatsappImage from "../../assets/Print_Glyph_White.png"
+import FButton from '../../components/FButton/FButton'
 
 export interface HubSpotUser {
   hubspot_id?: string
@@ -204,6 +206,10 @@ const Balance = () => {
 
   const isStepperLoading = isRegisterLoading || isCSVLoading
 
+  const goToWhatsapp = () => {
+    window.open('https://wa.me/16892422109?text=Hola%2C%20vengo%20desde%20Balancito%2C%20tengo%20una%20consulta', '_blank')
+  }
+
   return (
     <Box className={styles.balanceContainer}>
       <Box className={styles.headerContainer}>
@@ -258,6 +264,29 @@ const Balance = () => {
           showCongratulations={showCongratulations}
         />
       )}
+      <Box
+        onClick={goToWhatsapp}
+        sx={{
+          position: 'fixed',    // Hace que el botón no se mueva con el scroll
+          bottom: '20px',       // Se ubica a 20px del fondo
+          right: '20px',        // Se ubica a 20px del borde derecho
+          cursor: 'pointer',
+          zIndex: 9999,          // Asegura que quede por encima de la mayoría de elementos
+          background: "#25D366",
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          padding: "8px 24px",
+          borderRadius: "13px",
+          fontSize: 12,
+          boxShadow: 5
+        }}
+      >
+        <img src={WhatsappImage} alt="Abrir Link" style={{ width: 20, height: 20 }} />
+        <Typography sx={{ fontWeight: 600 }}>Ayuda</Typography>
+      </Box>
+
     </Box>
   )
 }
